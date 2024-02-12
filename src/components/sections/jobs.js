@@ -134,6 +134,11 @@ const StyledTabPanels = styled.div`
   @media (max-width: 600px) {
     margin-left: 0;
   }
+
+  strong {
+    color: var(--green);
+    font-weight: 400;
+  }
 `;
 
 const StyledTabPanel = styled.div`
@@ -247,6 +252,7 @@ const Jobs = () => {
       <h2 className="numbered-heading">Where I’ve Worked</h2>
 
       <div className="inner">
+        {/* Companies sidebar */}
         <StyledTabList role="tablist" aria-label="Job tabs" onKeyDown={e => onKeyDown(e)}>
           {jobsData &&
             jobsData.map(({ node }, i) => {
@@ -268,7 +274,8 @@ const Jobs = () => {
             })}
           <StyledHighlight activeTabId={activeTabId} />
         </StyledTabList>
-
+        
+        {/* Job descriptions */}
         <StyledTabPanels>
           {jobsData &&
             jobsData.map(({ node }, i) => {
