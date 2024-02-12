@@ -1,6 +1,6 @@
 ---
 date: '2027-04-23'
-title: 'Template'
+title: 'TemplateProject'
 github: ''
 external: ''
 ios: ''

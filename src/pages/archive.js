@@ -130,7 +130,14 @@ const StyledTableContainer = styled.div`
 `;
 
 const ArchivePage = ({ location, data }) => {
-  const projects = data.allMarkdownRemark.edges;
+  const projects = data.allMarkdownRemark.edges.filter(({ node }, i) => {
+      const {
+        title,
+      } = node.frontmatter;
+      return title != "TemplateProject"
+    }
+  );
+
   const revealTitle = useRef(null);
   const revealTable = useRef(null);
   const revealProjects = useRef([]);
