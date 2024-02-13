@@ -1,5 +1,5 @@
 ---
-date: '1'
+order: 4
 title: 'Simple Chess'
 cover: './simple-chess.png'
 github: 'https://github.com/AlexShen101/simple-chess_cs-246'

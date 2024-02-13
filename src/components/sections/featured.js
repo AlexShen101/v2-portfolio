@@ -303,7 +303,7 @@ const Featured = () => {
     {
       featured: allMarkdownRemark(
         filter: { fileAbsolutePath: { regex: "/content/featured/" } }
-        sort: { fields: [frontmatter___date], order: ASC }
+        sort: { fields: [frontmatter___order], order: ASC }
       ) {
         edges {
           node {
@@ -349,7 +349,7 @@ const Featured = () => {
         {featuredProjects &&
           featuredProjects.map(({ node }, i) => {
             const { frontmatter, html } = node;
-            const { external, title, tech, github, cover } = frontmatter;
+            const { order, external, title, tech, github, cover } = frontmatter;
             const image = getImage(cover);
 
             return (

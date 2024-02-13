@@ -1,5 +1,5 @@
 ---
-date: '1'
+order: 1
 title: 'Genshin Deck Builder'
 cover: './genshintcg.png'
 github: 'https://github.com/AlexShen101/genshin_tcg_deck_builder'

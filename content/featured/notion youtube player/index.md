@@ -1,5 +1,5 @@
 ---
-date: '1'
+order: 2
 title: 'Notion Youtube Player'
 github: 'https://github.com/AlexShen101/Notion_YT_Player'
 tech:

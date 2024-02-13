@@ -1,5 +1,5 @@
 ---
-date: '1'
+order: 4
 title: 'CQ Hero Wiki/Tierlist'
 cover: './cq-hero.png'
 github: 'https://github.com/AlexShen101/cq-hero-db'
