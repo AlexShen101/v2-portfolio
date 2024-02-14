@@ -1,6 +1,7 @@
 ---
 order: 2
 title: 'Notion Youtube Player'
+cover: './notion_yt_cover.png'
 github: 'https://github.com/AlexShen101/Notion_YT_Player'
 tech:
   - Python

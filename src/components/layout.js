@@ -65,7 +65,6 @@ const Layout = ({ children, location }) => {
               <Nav isHome={isHome} />
               <Social isHome={isHome} />
               <Email isHome={isHome} />
-
               <div id="content">
                 {children}
                 <Footer />
