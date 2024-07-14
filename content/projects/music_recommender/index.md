@@ -9,6 +9,8 @@ tech:
 - Python
 - GraphQL
 showInProjects: false
+featured: false
+cover: './thumbnail.png'
 ---
 
 This project implements a music recommendation system using collaborating filtering with Alternating Least Squares (ALS). It uses Flask and GraphQL to create an API and provide a query interface for interacting with the recommendation system. The recommendation system is trained on the Last.fm music dataset.

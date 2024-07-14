@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
-import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import { GatsbyImage, getImage, StaticImage } from 'gatsby-plugin-image';
 import styled from 'styled-components';
 import sr from '@utils/sr';
 import { srConfig } from '@config';
@@ -301,9 +301,12 @@ const StyledProject = styled.li`
 const Featured = () => {
   const data = useStaticQuery(graphql`
     {
-      featured: allMarkdownRemark(
-        filter: { fileAbsolutePath: { regex: "/content/featured/" } }
-        sort: { fields: [frontmatter___order], order: ASC }
+      projects: allMarkdownRemark(
+        filter: { 
+          fileAbsolutePath: { regex: "/content/projects/.*/index\\.md/" },
+          frontmatter: { featured: { eq: true } }
+          }
+        sort: { fields: [frontmatter___rating], order: DESC }
       ) {
         edges {
           node {
@@ -325,7 +328,10 @@ const Featured = () => {
     }
   `);
 
-  const featuredProjects = data.featured.edges.filter(({ node }) => node);
+  console.log(data)
+
+
+  const featuredProjects = data.projects.edges.filter(({ node }) => node);
   const revealTitle = useRef(null);
   const revealProjects = useRef([]);
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -349,8 +355,11 @@ const Featured = () => {
         {featuredProjects &&
           featuredProjects.map(({ node }, i) => {
             const { frontmatter, html } = node;
-            const { order, external, title, tech, github, cover } = frontmatter;
+            const { external, title, tech, github, cover } = frontmatter;
+            
+            console.log(cover)
             const image = getImage(cover);
+            console.log(image)
 
             return (
               <StyledProject key={i} ref={el => (revealProjects.current[i] = el)}>
@@ -392,7 +401,11 @@ const Featured = () => {
 
                 <div className="project-image">
                   <a href={external ? external : github ? github : '#'}>
-                    <GatsbyImage image={image} alt={title} className="img" />
+                    {cover ? (
+                      <GatsbyImage image={image} alt={title} className="img" />
+                    ) : (
+                      <StaticImage src="./thumbnail.png" alt={title} className="img" />
+                    )}
                   </a>
                 </div>
               </StyledProject>

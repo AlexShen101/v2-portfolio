@@ -1,15 +1,15 @@
 ---
-date: '2022-05-22'
-title: 'notion-youtube-player'
-github: 'https://github.com/AlexShen101/Notion_YT_Player'
-external: ''
+date: '2024-01-02'
+title: 'obsidian notes'
+github: 'https://github.com/AlexShen101/published_notes'
+external: 'http://notes.alexshen.com.de/'
 ios: ''
 android: ''
 tech:
-- Python
-- Bash
-- AppleScript
+- Obsidian
 showInProjects: false
+featured: false
+cover: './thumbnail.png'
 ---
 
 A collection of scripts that helps convert review questions in obsidian to a formatted csv file, which can then be easily imported into Anki as flashcards.

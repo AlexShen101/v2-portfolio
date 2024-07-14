@@ -8,6 +8,8 @@ android: ''
 tech:
 - Python
 showInProjects: false
+featured: false
+cover: './thumbnail.png'
 ---
 
 A collection of scripts that transforms Notion into a task manager, allowing users to quickly add tasks, projects and assign dates to tasks.

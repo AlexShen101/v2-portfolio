@@ -11,6 +11,8 @@ tech:
 - TailwindCSS
 - Vite
 showInProjects: false
+featured: false
+cover: './thumbnail.png'
 ---
 
 A fun counter app.
