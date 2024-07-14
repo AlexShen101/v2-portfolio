@@ -9,6 +9,7 @@ tech:
 - Next.js
 - TypeScript
 - Strapi
+- Three.js
 showInProjects: false
 featured: true
 rating: 7
