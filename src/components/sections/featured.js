@@ -7,6 +7,11 @@ import { srConfig } from '@config';
 import { Icon } from '@components/icons';
 import { usePrefersReducedMotion } from '@hooks';
 
+const StyledFeatureSection = styled.section`
+  padding-top: 20vh; /* Adjust this value to match the height of your navbar */
+  margin-top: -20vh; /* Negative margin to pull the content up */
+`;
+
 const StyledProjectsGrid = styled.ul`
   ${({ theme }) => theme.mixins.resetList};
 
@@ -346,7 +351,7 @@ const Featured = () => {
   }, []);
 
   return (
-    <section id="projects">
+    <StyledFeatureSection id="projects">
       <h2 className="numbered-heading" ref={revealTitle}>
         Some Things I’ve Built
       </h2>
@@ -412,7 +417,7 @@ const Featured = () => {
             );
           })}
       </StyledProjectsGrid>
-    </section>
+    </StyledFeatureSection>
   );
 };
 

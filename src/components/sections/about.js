@@ -21,7 +21,9 @@ import { usePrefersReducedMotion } from '@hooks';
 
 const StyledAboutSection = styled.section`
   max-width: 700px;
-
+  padding-top: 20vh; /* Adjust this value to match the height of your navbar */
+  margin-top: -20vh; /* Negative margin to pull the content up */
+  
   .inner {
     display: flex;
 

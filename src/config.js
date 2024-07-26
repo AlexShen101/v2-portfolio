@@ -14,7 +14,7 @@ module.exports = {
 
   navLinks: [
     {
-      name: 'About',
+      name: 'Skills',
       url: '/#about',
     },
     {

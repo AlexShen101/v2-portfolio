@@ -9,7 +9,9 @@ import { usePrefersReducedMotion } from '@hooks';
 
 const StyledJobsSection = styled.section`
   max-width: 700px;
-
+  padding-top: 30vh; /* Adjust this value to match the height of your navbar */
+  margin-top: -20vh; /* Negative margin to pull the content up */
+  
   .inner {
     display: flex;
 

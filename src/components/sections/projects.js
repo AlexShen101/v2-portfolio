@@ -11,7 +11,9 @@ const StyledProjectsSection = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  padding-top: 20vh; /* Adjust this value to match the height of your navbar */
+  margin-top: -20vh; /* Negative margin to pull the content up */
+  
   h2 {
     font-size: clamp(24px, 5vw, var(--fz-heading));
   }
