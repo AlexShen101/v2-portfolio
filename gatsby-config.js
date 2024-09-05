@@ -10,6 +10,20 @@ module.exports = {
     twitterUsername: 'none',
   },
   plugins: [
+    {
+      resolve: `gatsby-plugin-google-gtag`,
+      options: {
+        // You can add multiple tracking ids and a pageview event will be fired for all of them.
+        trackingIds: [
+          "G-4LN2NNLLT7", // Google Analytics / GA
+        ],
+        // This object is used for configuration specific to this plugin
+        pluginConfig: {
+          // Puts tracking script in the head instead of the body
+          head: true,
+        },
+      },
+    },
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-styled-components`,
     `gatsby-plugin-image`,
@@ -27,8 +41,6 @@ module.exports = {
         theme_color: config.colors.navy,
         display: 'minimal-ui',
         icon: 'src/images/logo.png',
-        trackingId: "G-4LN2NNLLT7",
-        head: false,
       },
     },
     `gatsby-plugin-offline`,
