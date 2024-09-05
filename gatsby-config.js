@@ -27,6 +27,8 @@ module.exports = {
         theme_color: config.colors.navy,
         display: 'minimal-ui',
         icon: 'src/images/logo.png',
+        trackingId: "G-4LN2NNLLT7",
+        head: false,
       },
     },
     `gatsby-plugin-offline`,
