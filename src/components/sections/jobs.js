@@ -8,9 +8,9 @@ import sr from '@utils/sr';
 import { usePrefersReducedMotion } from '@hooks';
 
 const StyledJobsSection = styled.section`
-  max-width: 700px;
+  max-width: 1100px;
   padding-top: 30vh; /* Adjust this value to match the height of your navbar */
-  margin-top: -20vh; /* Negative margin to pull the content up */
+  margin-top: -25vh; /* Negative margin to pull the content up */
   
   .inner {
     display: flex;

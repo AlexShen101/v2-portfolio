@@ -9,7 +9,7 @@ import { usePrefersReducedMotion } from '@hooks';
 
 const StyledFeatureSection = styled.section`
   padding-top: 20vh; /* Adjust this value to match the height of your navbar */
-  margin-top: -20vh; /* Negative margin to pull the content up */
+  margin-top: -25vh; /* Negative margin to pull the content up */
 `;
 
 const StyledProjectsGrid = styled.ul`

@@ -144,12 +144,12 @@ const Hero = () => {
   }, []);
 
   const one = <h1>Hi, my name is</h1>;
-  const two = <h2 className="big-heading">Alexander Shen.</h2>;
-  const three = <h3 className="big-heading">Lifelong learner and pioneer.</h3>;
+  const two = <h2 className="big-heading">Alexander Shen</h2>;
+  const three = <h3 className="big-heading">Lifelong learner and pioneer</h3>;
   const four = (
     <>
       <p>
-        I'm a software engineer with an insatiable thirst for knowledge and a goal to craft impactful tech and shape the future.
+        My goal is to help people with code.
       </p>
     </>
   );

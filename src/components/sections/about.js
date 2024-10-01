@@ -20,9 +20,9 @@ import { usePrefersReducedMotion } from '@hooks';
 // `;
 
 const StyledAboutSection = styled.section`
-  max-width: 700px;
+  max-width: 1100px;
   padding-top: 20vh; /* Adjust this value to match the height of your navbar */
-  margin-top: -20vh; /* Negative margin to pull the content up */
+  margin-top: -10vh; /* Negative margin to pull the content up */
   
   .inner {
     display: flex;
@@ -94,24 +94,17 @@ const About = () => {
 
   return (
     <StyledAboutSection id="about" ref={revealContainer}>
-      <h2 className="numbered-heading">Skills</h2>
+      <h2 className="numbered-heading">About Me</h2>
 
       <div className="inner">
         <StyledText>
           <div>
-            {/*
-              <p>
-                Insert "About Me" text here if needed
-              </p>
+            <p>
+              I'm always trying to pick up and master new skills. Currently getting a Bachelor's in Computer Science at the University of Waterloo. When I'm not coding, you can find me video editing, learning 3D modeling, or playing video games.
+            </p>
 
-            */}
-
-            <p>Here are a few technologies I’ve been working with recently:</p>
+            {/* add skills here */}
           </div>
-
-          <ul className="skills-list">
-            {skills && skills.map((skill, i) => <li key={i}>{skill}</li>)}
-          </ul>
         </StyledText>
 
       </div>
