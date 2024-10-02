@@ -6,6 +6,7 @@ import {
   IconLogo,
 } from '@components/icons';
 import { RiGithubLine } from "react-icons/ri";
+import { FiLinkedin } from "react-icons/fi";
 
 const Icon = ({ name }) => {
   switch (name) {
@@ -14,7 +15,7 @@ const Icon = ({ name }) => {
     case 'GitHub':
       return <RiGithubLine />;
     case 'Linkedin':
-      return <IconLinkedin />;
+      return <FiLinkedin />;
     case 'Logo':
       return <IconLogo />;
     default:
