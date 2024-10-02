@@ -10,6 +10,14 @@ module.exports = {
       name: 'Linkedin',
       url: 'https://www.linkedin.com/in/alexandershen2004',
     },
+    {
+      name: 'Substack',
+      url: 'https://alexshen.substack.com',
+    },
+    {
+      name: 'Blog',
+      url: 'https://notes.alexshen.com.de/',
+    }
   ],
 
   navLinks: [
