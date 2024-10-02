@@ -18,10 +18,6 @@ module.exports = {
 
   navLinks: [
     {
-      name: 'Skills',
-      url: '/#about',
-    },
-    {
       name: 'Experience',
       url: '/#jobs',
     },
@@ -29,6 +25,10 @@ module.exports = {
       name: 'Work',
       url: '/#projects',
     },
+    // {
+    //   name: 'Blog',
+    //   url: '/#featured-posts',
+    // },
     {
       name: 'Contact',
       url: '/#contact',

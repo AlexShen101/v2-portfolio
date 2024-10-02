@@ -10,7 +10,7 @@ import { usePrefersReducedMotion } from '@hooks';
 const StyledJobsSection = styled.section`
   max-width: 1100px;
   padding-top: 30vh; /* Adjust this value to match the height of your navbar */
-  margin-top: -25vh; /* Negative margin to pull the content up */
+  margin-top: -20vh; /* Negative margin to pull the content up */
   
   .inner {
     display: flex;
@@ -250,7 +250,7 @@ const Jobs = () => {
   };
 
   return (
-    <StyledJobsSection id="jobs" ref={revealContainer}>
+    <StyledJobsSection ref={revealContainer}>
       <h2 className="numbered-heading">Where I’ve Worked</h2>
 
       <div className="inner">

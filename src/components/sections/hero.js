@@ -53,6 +53,11 @@ const StyledTextColumn = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+
+  .subheading {
+    margin: 0;
+    font-size: clamp(20px, 5vw, 40px);
+  }
 `;
 
 const StyledImageColumn = styled.div`
@@ -145,11 +150,11 @@ const Hero = () => {
 
   const one = <h1>Hi, my name is</h1>;
   const two = <h2 className="big-heading">Alexander Shen</h2>;
-  const three = <h3 className="big-heading">Lifelong learner and pioneer</h3>;
+  const three = <h3 className="subheading">Lifelong learner and pioneer</h3>;
   const four = (
     <>
       <p>
-        My goal is to help people with code.
+        I'm always trying to pick up and master new skills. Currently getting a Bachelor's in Computer Science at the University of Waterloo. When I'm not coding, you can find me video editing, learning 3D modeling, or playing video games.
       </p>
     </>
   );
