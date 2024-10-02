@@ -1,25 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  IconExternal,
-  IconLinkedin,
   IconLogo,
 } from '@components/icons';
 import { RiGithubLine } from "react-icons/ri";
-import { FiLinkedin } from "react-icons/fi";
+import { RiLinkedinBoxFill } from "react-icons/ri";
+import { RiExternalLinkLine } from "react-icons/ri";
 
 const Icon = ({ name }) => {
   switch (name) {
     case 'External':
-      return <IconExternal />;
+      return <RiExternalLinkLine />;
     case 'GitHub':
       return <RiGithubLine />;
     case 'Linkedin':
-      return <FiLinkedin />;
+      return <RiLinkedinBoxFill />;
     case 'Logo':
       return <IconLogo />;
     default:
-      return <IconExternal />;
+      return <RiExternalLinkLine />;
   }
 };
 
