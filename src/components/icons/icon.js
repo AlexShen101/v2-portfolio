@@ -7,9 +7,12 @@ import { RiGithubLine } from "react-icons/ri";
 import { RiLinkedinBoxFill } from "react-icons/ri";
 import { RiExternalLinkLine } from "react-icons/ri";
 import { RiNewsLine } from "react-icons/ri";
+import { GoBookmarkFill } from "react-icons/go";
 
 const Icon = ({ name }) => {
   switch (name) {
+    case 'Bookmark':
+      return <GoBookmarkFill />;
     case 'External':
       return <RiExternalLinkLine />;
     case 'GitHub':

@@ -6,6 +6,8 @@ import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { Layout } from '@components';
 import { IconBookmark } from '@components/icons';
+import { Icon } from '@components/icons';
+
 
 const StyledMainContainer = styled.main`
   & > header {
@@ -171,7 +173,7 @@ const PensievePage = ({ location, data }) => {
                   <div className="post__inner">
                     <header>
                       <div className="post__icon">
-                        <IconBookmark />
+                        <Icon name={"Bookmark"} />
                       </div>
                       <h5 className="post__title">
                         <Link to={slug}>{title}</Link>
