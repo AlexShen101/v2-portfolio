@@ -6,6 +6,7 @@ import {
 import { RiGithubLine } from "react-icons/ri";
 import { RiLinkedinBoxFill } from "react-icons/ri";
 import { RiExternalLinkLine } from "react-icons/ri";
+import { RiNewsLine } from "react-icons/ri";
 
 const Icon = ({ name }) => {
   switch (name) {
@@ -17,6 +18,8 @@ const Icon = ({ name }) => {
       return <RiLinkedinBoxFill />;
     case 'Logo':
       return <IconLogo />;
+    case 'Substack':
+      return <RiNewsLine />;
     default:
       return <RiExternalLinkLine />;
   }

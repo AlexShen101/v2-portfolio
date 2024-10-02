@@ -14,10 +14,6 @@ module.exports = {
       name: 'Substack',
       url: 'https://alexshen.substack.com',
     },
-    {
-      name: 'Blog',
-      url: 'https://notes.alexshen.com.de/',
-    }
   ],
 
   navLinks: [
@@ -37,6 +33,10 @@ module.exports = {
       name: 'Contact',
       url: '/#contact',
     },
+    {
+      name: 'Notes',
+      url: 'https://notes.alexshen.com.de/',
+    }
   ],
 
   colors: {
