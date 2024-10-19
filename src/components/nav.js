@@ -31,26 +31,24 @@ const StyledHeader = styled.header`
     padding: 0 25px;
   }
 
-  @media (prefers-reduced-motion: no-preference) {
-    ${props =>
+  ${props =>
     props.scrollDirection === 'up' &&
-      !props.scrolledToTop &&
-      css`
-        height: var(--nav-scroll-height);
-        transform: translateY(0px);
-        background-color: rgba(10, 25, 47, 0.85);
-        box-shadow: 0 10px 30px -10px var(--navy-shadow);
-      `};
+    !props.scrolledToTop &&
+    css`
+      height: var(--nav-scroll-height);
+      transform: translateY(0px);
+      background-color: rgba(10, 25, 47, 0.85);
+      box-shadow: 0 10px 30px -10px var(--navy-shadow);
+    `};
 
-    ${props =>
+  ${props =>
     props.scrollDirection === 'down' &&
-      !props.scrolledToTop &&
-      css`
-        height: var(--nav-scroll-height);
-        transform: translateY(calc(var(--nav-scroll-height) * -1));
-        box-shadow: 0 10px 30px -10px var(--navy-shadow);
-      `};
-  }
+    !props.scrolledToTop &&
+    css`
+      height: var(--nav-scroll-height);
+      transform: translateY(calc(var(--nav-scroll-height) * -1));
+      box-shadow: 0 10px 30px -10px var(--navy-shadow);
+    `};
 `;
 
 const StyledNav = styled.nav`
@@ -64,46 +62,43 @@ const StyledNav = styled.nav`
 
   .logo {
     ${({ theme }) => theme.mixins.flexCenter};
+    color: var(--green);
+    width: 42px;
+    height: 42px;
+    position: relative;
+    z-index: 1;
 
-    a {
-      color: var(--green);
-      width: 42px;
-      height: 42px;
+    .hex-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      @media (prefers-reduced-motion: no-preference) {
+        transition: var(--transition);
+      }
+    }
+
+    .logo-container {
       position: relative;
       z-index: 1;
-
-      .hex-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: -1;
+      svg {
+        fill: none;
+        user-select: none;
         @media (prefers-reduced-motion: no-preference) {
           transition: var(--transition);
         }
-      }
-
-      .logo-container {
-        position: relative;
-        z-index: 1;
-        svg {
-          fill: none;
-          user-select: none;
-          @media (prefers-reduced-motion: no-preference) {
-            transition: var(--transition);
-          }
-          polygon {
-            fill: var(--navy);
-          }
+        polygon {
+          fill: var(--navy);
         }
       }
+    }
 
-      &:hover,
-      &:focus {
-        outline: 0;
-        transform: translate(-4px, -4px);
-        .hex-container {
-          transform: translate(4px, 3px);
-        }
+    &:hover,
+    &:focus {
+      outline: 0;
+      transform: translate(-4px, -4px);
+      .hex-container {
+        transform: translate(4px, 3px);
       }
     }
   }
@@ -150,7 +145,17 @@ const StyledLinks = styled.div`
   }
 `;
 
-const Nav = ({ isHome }) => {
+const BackToHomeText = styled.span`
+  color: var(--lightest-slate);
+  transition: var(--transition);
+  font-size: var(--fz-md);
+
+  &:hover {
+    color: var(--green);
+  }
+`;
+
+const Nav = ({ isHome, isVideoPage }) => {
   const [isMounted, setIsMounted] = useState(!isHome);
   const scrollDirection = useScrollDirection('down');
   const [scrolledToTop, setScrolledToTop] = useState(true);
@@ -183,25 +188,14 @@ const Nav = ({ isHome }) => {
 
   const Logo = (
     <div className="logo" tabIndex="-1">
-      {isHome ? (
-        <a href="/" aria-label="home">
-          <div className="hex-container">
-            <IconHex />
-          </div>
-          <div className="logo-container">
-            <IconLogo />
-          </div>
-        </a>
-      ) : (
-        <Link to="/" aria-label="home">
-          <div className="hex-container">
-            <IconHex />
-          </div>
-          <div className="logo-container">
-            <IconLogo />
-          </div>
-        </Link>
-      )}
+      <Link to="/" aria-label="home">
+        <div className="hex-container">
+          <IconHex />
+        </div>
+        <div className="logo-container">
+          <IconLogo />
+        </div>
+      </Link>
     </div>
   );
 
@@ -218,19 +212,23 @@ const Nav = ({ isHome }) => {
           <>
             {Logo}
 
-            <StyledLinks>
-              <ol>
-                {navLinks &&
-                  navLinks.map(({ url, name }, i) => (
-                    <li key={i}>
-                      <Link to={url}>{name}</Link>
-                    </li>
-                  ))}
-              </ol>
-              <div>{ResumeLink}</div>
-            </StyledLinks>
-
-            <Menu />
+            {isVideoPage ? (
+              <Link to="/">
+                <BackToHomeText>Back to Home</BackToHomeText>
+              </Link>
+            ) : (
+              <StyledLinks>
+                <ol>
+                  {navLinks &&
+                    navLinks.map(({ url, name }, i) => (
+                      <li key={i}>
+                        <Link to={url}>{name}</Link>
+                      </li>
+                    ))}
+                </ol>
+                {ResumeLink}
+              </StyledLinks>
+            )}
           </>
         ) : (
           <>
@@ -242,41 +240,47 @@ const Nav = ({ isHome }) => {
               )}
             </TransitionGroup>
 
-            <StyledLinks>
-              <ol>
+            {isVideoPage ? (
+              <Link to="/">
+                <BackToHomeText>Back to Home</BackToHomeText>
+              </Link>
+            ) : (
+              <StyledLinks>
+                <ol>
+                  <TransitionGroup component={null}>
+                    {isMounted &&
+                      navLinks &&
+                      navLinks.map(({ url, name }, i) => (
+                        <CSSTransition key={i} classNames={fadeDownClass} timeout={timeout}>
+                          <li key={i} style={{ transitionDelay: `${isHome ? i * 100 : 0}ms` }}>
+                            <Link to={url}>{name}</Link>
+                          </li>
+                        </CSSTransition>
+                      ))}
+                  </TransitionGroup>
+                </ol>
+
                 <TransitionGroup component={null}>
-                  {isMounted &&
-                    navLinks &&
-                    navLinks.map(({ url, name }, i) => (
-                      <CSSTransition key={i} classNames={fadeDownClass} timeout={timeout}>
-                        <li key={i} style={{ transitionDelay: `${isHome ? i * 100 : 0}ms` }}>
-                          <Link to={url}>{name}</Link>
-                        </li>
-                      </CSSTransition>
-                    ))}
+                  {isMounted && (
+                    <CSSTransition classNames={fadeDownClass} timeout={timeout}>
+                      <div style={{ transitionDelay: `${isHome ? navLinks.length * 100 : 0}ms` }}>
+                        {ResumeLink}
+                      </div>
+                    </CSSTransition>
+                  )}
                 </TransitionGroup>
-              </ol>
-
-              <TransitionGroup component={null}>
-                {isMounted && (
-                  <CSSTransition classNames={fadeDownClass} timeout={timeout}>
-                    <div style={{ transitionDelay: `${isHome ? navLinks.length * 100 : 0}ms` }}>
-                      {ResumeLink}
-                    </div>
-                  </CSSTransition>
-                )}
-              </TransitionGroup>
-            </StyledLinks>
-
-            <TransitionGroup component={null}>
-              {isMounted && (
-                <CSSTransition classNames={fadeClass} timeout={timeout}>
-                  <Menu />
-                </CSSTransition>
-              )}
-            </TransitionGroup>
+              </StyledLinks>
+            )}
           </>
         )}
+
+        <TransitionGroup component={null}>
+          {isMounted && (
+            <CSSTransition classNames={fadeClass} timeout={timeout}>
+              <Menu />
+            </CSSTransition>
+          )}
+        </TransitionGroup>
       </StyledNav>
     </StyledHeader>
   );

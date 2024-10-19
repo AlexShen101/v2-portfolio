@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import styled, { ThemeProvider } from 'styled-components';
 import { Head, Nav, Social, Email, Footer } from '@components';
 import { GlobalStyle, theme } from '@styles';
+import { Link } from 'gatsby';
+import { IconLogo, IconHex } from '@components/icons';
 
 const StyledContent = styled.div`
   display: flex;
@@ -12,6 +14,7 @@ const StyledContent = styled.div`
 
 const Layout = ({ children, location }) => {
   const isHome = location.pathname === '/';
+  const isVideoPage = location.pathname === '/test';
 
   // Sets target="_blank" rel="noopener noreferrer" on external links
   const handleExternalLinks = () => {
@@ -54,15 +57,19 @@ const Layout = ({ children, location }) => {
           </a>
 
           <StyledContent>
-              <Nav isHome={isHome} />
-              <Social isHome={isHome} />
-              <Email isHome={isHome} />
-              <div id="content">
-                {children}
-                <Footer />
-              </div>
-            </StyledContent>
+            <Nav isHome={isHome} isVideoPage={isVideoPage} />
+            {!isVideoPage && (
+              <>
+                <Social isHome={isHome} />
+                <Email isHome={isHome} />
+              </>
+            )}
 
+            <div id="content">
+              {children}
+              <Footer />
+            </div>
+          </StyledContent>
         </ThemeProvider>
       </div>
     </>
