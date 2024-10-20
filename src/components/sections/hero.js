@@ -152,11 +152,13 @@ const Hero = () => {
   const two = <h2 className="big-heading">Alexander Shen</h2>;
   const three = <h3 className="subheading">Lifelong learner and pioneer</h3>;
   const four = (
-    <>
-      <p>
-        I'm always trying to pick up and master new skills. Currently getting a Bachelor's in Computer Science at the University of Waterloo. When I'm not coding, you can find me video editing, learning 3D modeling, or playing video games.
-      </p>
-    </>
+    <p>        
+      I'm always trying to pick up and master new skills. Currently getting a 
+      Bachelor's in Computer Science at the University of Waterloo. When I'm 
+      not coding, you can find me <a href="YOUR_VIDEO_PORTFOLIO_URL" 
+      target="_blank" rel="noopener noreferrer">video editing</a>, learning 
+      3D modeling, or playing video games.
+    </p>
   );
 
   const items = [one, two, three, four];
