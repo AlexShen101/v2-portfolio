@@ -12,7 +12,7 @@ const StyledContent = styled.div`
 
 const Layout = ({ children, location }) => {
   const isHome = location.pathname === '/';
-  const isVideoPage = location.pathname === '/test';
+  const isVideoPage = location.pathname === '/video_portfolio';
 
   // Sets target="_blank" rel="noopener noreferrer" on external links
   const handleExternalLinks = () => {

@@ -48,10 +48,6 @@ module.exports = {
       name: 'Work',
       url: '/#projects',
     },
-    // {
-    //   name: 'Blog',
-    //   url: '/#featured-posts',
-    // },
     {
       name: 'Contact',
       url: '/#contact',
@@ -59,7 +55,11 @@ module.exports = {
     {
       name: 'Notes',
       url: 'https://notes.alexshen.com.de/',
-    }
+    },
+    {
+      name: 'Video Portfolio',
+      url: '/video_portfolio',
+    },
   ],
 
   colors: {
