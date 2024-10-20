@@ -169,6 +169,39 @@ const StyledTabPanel = styled.div`
     font-family: var(--font-mono);
     font-size: var(--fz-xs);
   }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .tag {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 8px 12px;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    transition: all 0.3s ease;
+    font-size: var(--fz-sm);
+    font-weight: 500;
+
+    &:hover {
+      background: linear-gradient(
+        135deg, 
+        rgba(100, 255, 218, 0.1) 0%, 
+        rgba(10, 25, 47, 0.7) 100%
+      );
+      box-shadow: 0 8px 12px 0 rgba(100, 255, 218, 0.1);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(100, 255, 218, 0.3);
+      transform: translateY(-2px);
+    }
+  }
 `;
 
 const Jobs = () => {
@@ -186,6 +219,7 @@ const Jobs = () => {
               location
               range
               url
+              tags
             }
             html
           }
@@ -282,7 +316,7 @@ const Jobs = () => {
           {jobsData &&
             jobsData.map(({ node }, i) => {
               const { frontmatter, html } = node;
-              const { title, url, company, range } = frontmatter;
+              const { title, url, company, range, tags } = frontmatter;
 
               return (
                 <CSSTransition key={i} in={activeTabId === i} timeout={250} classNames="fade">
@@ -306,6 +340,12 @@ const Jobs = () => {
                     <p className="range">{range}</p>
 
                     <div dangerouslySetInnerHTML={{ __html: html }} />
+
+                    <div className="tags">
+                      {tags.map((tag, index) => (
+                        <span key={index} className="tag">{tag}</span>
+                      ))}
+                    </div>
                   </StyledTabPanel>
                 </CSSTransition>
               );

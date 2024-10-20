@@ -117,7 +117,7 @@ const StyledProject = styled.li`
       -webkit-backdrop-filter: blur(4px);
       border: 1px solid rgba(255, 255, 255, 0.18);
       transition: all 0.3s ease;
-      font-size: var(--fz-md);
+      font-size: var(--fz-sm);
       font-weight: 500;
 
       &:hover {
@@ -133,6 +133,8 @@ const StyledProject = styled.li`
         transform: translateY(-2px);
       }
     }
+    
+    margin-bottom: 15px;
   }
 
   .project-links {
