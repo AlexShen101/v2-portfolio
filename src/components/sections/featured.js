@@ -14,114 +14,164 @@ const StyledFeatureSection = styled.section`
 
 const StyledProjectsGrid = styled.ul`
   ${({ theme }) => theme.mixins.resetList};
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 80px;
+  margin-top: 50px;
 
-  a {
-    position: relative;
-    z-index: 1;
+  @media (max-width: 768px) {
+    grid-gap: 40px;
   }
 `;
 
 const StyledProject = styled.li`
-  position: relative;
   display: grid;
-  grid-gap: 10px;
-  grid-template-columns: repeat(12, 1fr);
-  align-items: center;
+  grid-template-columns: 3fr 2fr; // This creates a 60% / 40% split
+  grid-template-rows: auto 1fr;
+  grid-gap: 16px;
 
-  @media (max-width: 768px) {
-    ${({ theme }) => theme.mixins.boxShadow};
-  }
+  .project-image {
+    grid-column: 1 / 2;
+    grid-row: 1 / -1; // Span all rows
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 
-  &:not(:last-of-type) {
-    margin-bottom: 100px;
-
-    @media (max-width: 768px) {
-      margin-bottom: 70px;
+    a {
+      display: block;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
     }
 
-    @media (max-width: 480px) {
-      margin-bottom: 30px;
-    }
-  }
+    .img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.5;
+      transition: opacity 0.3s ease, transform 0.3s ease;
 
-  &:nth-of-type(odd) {
-    .project-content {
-      grid-column: 7 / -1;
-      text-align: right;
-
-      @media (max-width: 1080px) {
-        grid-column: 5 / -1;
-      }
-      @media (max-width: 768px) {
-        grid-column: 1 / -1;
-        padding: 40px 40px 30px;
-        text-align: left;
-      }
-      @media (max-width: 480px) {
-        padding: 25px 25px 20px;
-      }
-    }
-    .project-tech-list {
-      justify-content: flex-end;
-
-      @media (max-width: 768px) {
-        justify-content: flex-start;
-      }
-
-      li {
-        margin: 0 0 5px 20px;
-
-        @media (max-width: 768px) {
-          margin: 0 10px 5px 0;
-        }
-      }
-    }
-    .project-links {
-      justify-content: flex-end;
-      margin-left: 0;
-      margin-right: -10px;
-
-      @media (max-width: 768px) {
-        justify-content: flex-start;
-        margin-left: -10px;
-        margin-right: 0;
-      }
-    }
-    .project-image {
-      grid-column: 1 / 8;
-
-      @media (max-width: 768px) {
-        grid-column: 1 / -1;
+      &:hover {
+        opacity: 0.8;
+        transform: scale(1.05);
       }
     }
   }
 
   .project-content {
-    position: relative;
-    grid-column: 1 / 7;
-    grid-row: 1 / -1;
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: var(--border-radius);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
 
-    @media (max-width: 1080px) {
-      grid-column: 1 / 9;
-    }
+  .project-details {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 
-    @media (max-width: 768px) {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      height: 100%;
-      grid-column: 1 / -1;
-      padding: 40px 40px 30px;
-      z-index: 5;
-    }
+  .tech-stack-heading {
+    font-size: var(--fz-md);
+    font-weight: 600;
+    color: var(--lightest-slate);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
 
-    @media (max-width: 480px) {
-      padding: 30px 25px 20px;
+  .project-tech-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    li {
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      transition: all 0.3s ease;
+      font-size: var(--fz-md);
+      font-weight: 500;
+
+      &:hover {
+        background: linear-gradient(
+          135deg, 
+          rgba(100, 255, 218, 0.1) 0%, 
+          rgba(10, 25, 47, 0.7) 100%
+        );
+        box-shadow: 0 8px 12px 0 rgba(100, 255, 218, 0.1);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(100, 255, 218, 0.3);
+        transform: translateY(-2px);
+      }
     }
   }
 
+  .project-links {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+
+    a {
+      padding: 10px;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        transform: translateY(-2px);
+      }
+
+      svg {
+        width: 22px;
+        height: 22px;
+        transition: transform 0.2s ease;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+
+  .project-description {
+    margin-top: 10px;
+  }
+
   .project-overline {
-    margin: 10px 0;
     color: var(--green);
     font-family: var(--font-mono);
     font-size: var(--fz-xs);
@@ -132,173 +182,26 @@ const StyledProject = styled.li`
     color: var(--lightest-slate);
     font-size: clamp(24px, 5vw, 28px);
 
-    @media (min-width: 768px) {
-      margin: 0 0 20px;
-    }
-
-    @media (max-width: 768px) {
-      color: var(--white);
-
-      a {
-        position: static;
-
-        &:before {
-          content: '';
-          display: block;
-          position: absolute;
-          z-index: 0;
-          width: 100%;
-          height: 100%;
-          top: 0;
-          left: 0;
-        }
-      }
-    }
-  }
-
-  .project-description {
-    ${({ theme }) => theme.mixins.boxShadow};
-    position: relative;
-    z-index: 2;
-    padding: 25px;
-    border-radius: var(--border-radius);
-    background-color: var(--light-navy);
-    color: var(--light-slate);
-    font-size: var(--fz-lg);
-
-    @media (max-width: 768px) {
-      padding: 20px 0;
-      background-color: transparent;
-      box-shadow: none;
-
-      &:hover {
-        box-shadow: none;
-      }
-    }
-
     a {
-      ${({ theme }) => theme.mixins.inlineLink};
-    }
-
-    strong {
-      color: var(--white);
-      font-weight: normal;
-    }
-  }
-
-  .project-tech-list {
-    display: flex;
-    flex-wrap: wrap;
-    position: relative;
-    z-index: 2;
-    margin: 25px 0 10px;
-    padding: 0;
-    list-style: none;
-
-    li {
-      margin: 0 20px 5px 0;
-      color: var(--light-slate);
-      font-family: var(--font-mono);
-      font-size: var(--fz-xs);
-      white-space: nowrap;
-    }
-
-    @media (max-width: 768px) {
-      margin: 10px 0;
-
-      li {
-        margin: 0 10px 5px 0;
-        color: var(--lightest-slate);
-      }
-    }
-  }
-
-  .project-links {
-    display: flex;
-    align-items: center;
-    position: relative;
-    margin-top: 10px;
-    margin-left: -10px;
-    color: var(--lightest-slate);
-
-    a {
-      ${({ theme }) => theme.mixins.flexCenter};
-      padding: 10px;
-
-      &.external {
-        svg {
-          width: 22px;
-          height: 22px;
-          margin-top: -4px;
-        }
-      }
-
-      svg {
-        width: 20px;
-        height: 20px;
-      }
-    }
-  }
-
-  .project-image {
-    ${({ theme }) => theme.mixins.boxShadow};
-    grid-column: 6 / -1;
-    grid-row: 1 / -1;
-    position: relative;
-    z-index: 1;
-
-    @media (max-width: 768px) {
-      grid-column: 1 / -1;
-      height: 100%;
-      opacity: 0.25;
-    }
-
-    a {
-      width: 100%;
-      height: 100%;
-      background-color: var(--green);
-      border-radius: var(--border-radius);
-      vertical-align: middle;
-
+      text-decoration: none;
+      color: inherit;
+      
       &:hover,
       &:focus {
-        background: transparent;
-        outline: 0;
-
-        &:before,
-        .img {
-          background: transparent;
-          filter: none;
-        }
-      }
-
-      &:before {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 3;
-        transition: var(--transition);
-        background-color: var(--navy);
-        mix-blend-mode: screen;
+        color: var(--green);
       }
     }
+  }
 
-    .img {
-      border-radius: var(--border-radius);
-      mix-blend-mode: multiply;
-      filter: grayscale(100%) contrast(1) brightness(90%);
+  &:nth-of-type(even) {
+    grid-template-columns: 2fr 3fr; // Reverse the 40% / 60% split for even items
 
-      @media (max-width: 768px) {
-        object-fit: cover;
-        width: auto;
-        height: 100%;
-        filter: grayscale(100%) contrast(1) brightness(50%);
-      }
+    .project-image {
+      grid-column: 2 / 3;
+    }
+    .project-content,
+    .project-details {
+      grid-column: 1 / 2;
     }
   }
 `;
@@ -353,7 +256,7 @@ const Featured = () => {
   return (
     <StyledFeatureSection id="projects">
       <h2 className="numbered-heading" ref={revealTitle}>
-        Some Things I’ve Built
+        Some Things I've Built
       </h2>
 
       <StyledProjectsGrid>
@@ -361,57 +264,55 @@ const Featured = () => {
           featuredProjects.map(({ node }, i) => {
             const { frontmatter, html } = node;
             const { external, title, tech, github, cover } = frontmatter;
-            
-            console.log(cover)
             const image = getImage(cover);
-            console.log(image)
 
             return (
-              <StyledProject key={i} ref={el => (revealProjects.current[i] = el)}>
-                <div className="project-content">
-                  <div>
-                    <p className="project-overline">Featured Project</p>
-
-                    <h3 className="project-title">
-                      <a href={external}>{title}</a>
-                    </h3>
-
-                    <div
-                      className="project-description"
-                      dangerouslySetInnerHTML={{ __html: html }}
-                    />
-
-                    {tech.length && (
-                      <ul className="project-tech-list">
-                        {tech.map((tech, i) => (
-                          <li key={i}>{tech}</li>
-                        ))}
-                      </ul>
-                    )}
-
-                    <div className="project-links">
-                      {github && (
-                        <a href={github} aria-label="GitHub Link">
-                          <Icon name="GitHub" />
-                        </a>
-                      )}
-                      {external && (
-                        <a href={external} aria-label="External Link" className="external">
-                          <Icon name="External" />
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
+              <StyledProject key={i} ref={el => (revealProjects.current[i] = el)} className={i % 2 === 1 ? 'right-image' : ''}>
                 <div className="project-image">
-                  <a href={external ? external : github ? github : '#'}>
+                  <a href={external || github || '#'}>
                     {cover ? (
                       <GatsbyImage image={image} alt={title} className="img" />
                     ) : (
                       <StaticImage src="./thumbnail.png" alt={title} className="img" />
                     )}
                   </a>
+                </div>
+
+                <div className="project-content">
+                  <p className="project-overline">Featured Project</p>
+                  <h3 className="project-title">
+                    <a href={external}>{title}</a>
+                  </h3>
+                  <div
+                    className="project-description"
+                    dangerouslySetInnerHTML={{ __html: html }}
+                  />
+                </div>
+
+                <div className="project-details">
+                  {tech.length && (
+                    <>
+                      <h4 className="tech-stack-heading">Built With</h4>
+                      <ul className="project-tech-list">
+                        {tech.map((tech, i) => (
+                          <li key={i}>{tech}</li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
+
+                  <div className="project-links">
+                    {github && (
+                      <a href={github} aria-label="GitHub Link">
+                        <Icon name="GitHub" />
+                      </a>
+                    )}
+                    {external && (
+                      <a href={external} aria-label="External Link" className="external">
+                        <Icon name="External" />
+                      </a>
+                    )}
+                  </div>
                 </div>
               </StyledProject>
             );
