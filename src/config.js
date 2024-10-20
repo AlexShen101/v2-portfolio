@@ -14,6 +14,10 @@ module.exports = {
       name: 'Substack',
       url: 'https://alexshen.substack.com',
     },
+    {
+      name: 'Email',
+      url: 'mailto:alexander.shen@gmail.com',
+    },
   ],
 
   videoSocialMedia: [

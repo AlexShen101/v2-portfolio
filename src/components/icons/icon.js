@@ -14,6 +14,8 @@ import { FaYoutube } from 'react-icons/fa';
 import { FaInstagram } from 'react-icons/fa';
 import { FaTiktok } from 'react-icons/fa';
 
+import { MdEmail } from 'react-icons/md';
+
 const Icon = ({ name }) => {
   switch (name) {
     case 'Bookmark':
@@ -24,6 +26,8 @@ const Icon = ({ name }) => {
       return <RiGithubLine />;
     case 'Linkedin':
       return <RiLinkedinBoxFill />;
+    case 'Email':
+      return <MdEmail />;
     case 'Logo':
       return <IconLogo />;
     case 'Substack':

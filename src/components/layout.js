@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled, { ThemeProvider } from 'styled-components';
-import { Head, Nav, Social, Email, Footer } from '@components';
+import { Head, Nav, Social, Footer } from '@components';
 import { GlobalStyle, theme } from '@styles';
-import { Link } from 'gatsby';
-import { IconLogo, IconHex } from '@components/icons';
 
 const StyledContent = styled.div`
   display: flex;
@@ -60,11 +58,6 @@ const Layout = ({ children, location }) => {
             <Nav isHome={isHome} isVideoPage={isVideoPage} />
 
             <Social isHome={isHome} isVideoPage={isVideoPage} />
-            {!isVideoPage && (
-              <>
-                <Email isHome={isHome} />
-              </>
-            )}
 
             <div id="content">
               {children}
