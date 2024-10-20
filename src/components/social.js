@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { socialMedia } from '@config';
+import { socialMedia, videoSocialMedia } from '@config';
 import { Side } from '@components';
 import { Icon } from '@components/icons';
 
@@ -43,11 +43,11 @@ const StyledSocialList = styled.ul`
   }
 `;
 
-const Social = ({ isHome }) => (
+const Social = ({ isHome, isVideoPage }) => (
   <Side isHome={isHome} orientation="left">
     <StyledSocialList>
-      {socialMedia &&
-        socialMedia.map(({ url, name }, i) => (
+      {(isVideoPage ? videoSocialMedia : socialMedia) &&
+        (isVideoPage ? videoSocialMedia : socialMedia).map(({ url, name }, i) => (
           <li key={i}>
             <a href={url} aria-label={name} target="_blank" rel="noreferrer">
               <Icon name={name} />
@@ -60,6 +60,7 @@ const Social = ({ isHome }) => (
 
 Social.propTypes = {
   isHome: PropTypes.bool,
+  isVideoPage: PropTypes.bool,
 };
 
 export default Social;

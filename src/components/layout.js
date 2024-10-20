@@ -58,9 +58,10 @@ const Layout = ({ children, location }) => {
 
           <StyledContent>
             <Nav isHome={isHome} isVideoPage={isVideoPage} />
+
+            <Social isHome={isHome} isVideoPage={isVideoPage} />
             {!isVideoPage && (
               <>
-                <Social isHome={isHome} />
                 <Email isHome={isHome} />
               </>
             )}

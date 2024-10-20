@@ -16,6 +16,25 @@ module.exports = {
     },
   ],
 
+  videoSocialMedia: [
+    {
+      name: 'YouTube',
+      url: 'https://www.youtube.com/@RandomHydra',
+    },
+    {
+      name: 'Twitter',
+      url: 'https://x.com/RandomHydr38443',
+    },
+    {
+      name: 'Instagram',
+      url: 'https://www.instagram.com/randomhydra/',
+    },
+    {
+      name: 'TikTok',
+      url: 'https://www.tiktok.com/@randomhydra',
+    },
+  ],
+
   navLinks: [
     {
       name: 'Experience',
