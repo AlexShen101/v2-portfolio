@@ -2,7 +2,7 @@
 date: '2024-05-18'
 title: 'bobashare'
 github: 'https://github.com/AlexShen101/BobaTalks-Hackathon'
-external: ''
+external: 'http://bobashare.alexshen.com.de'
 ios: ''
 android: ''
 tech:
@@ -11,10 +11,14 @@ tech:
 - Node.js
 - Express
 - MongoDB
-- Square
+- Square API
+- Docker
+- AWS
+- LangChain
+- OpenAI
 showInProjects: false
 featured: true
-rating: 6
+rating: 9
 cover: './thumbnail.png'
 ---
 
