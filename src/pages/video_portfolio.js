@@ -5,7 +5,7 @@ import { videos } from '/content/videoPorfolio/videos';
 const StyledVideosContainer = styled.div`
   max-width: 1000px;
   margin: 0 auto;
-  padding: 50px 0;
+  padding: 50px 80px;
 `;
 
 const VideoItem = styled.div`
@@ -13,10 +13,29 @@ const VideoItem = styled.div`
   
   iframe {
     max-width: 100%;
+    height: 315px;
   }
 
   h3 {
     margin-top: 0.5rem;
+  }
+`;
+
+const RegularVideosGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+`;
+
+const ShortsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+
+  ${VideoItem} {
+    iframe {
+      height: 560px;
+    }
   }
 `;
 
@@ -59,11 +78,10 @@ const VideosPage = ({ location }) => {
 
         <Section>
           <h2>Regular Videos</h2>
+          <RegularVideosGrid>
           {regularVideos.map((video) => (
             <VideoItem key={video.id}>
               <iframe
-                width="560"
-                height="315"
                 src={`https://www.youtube.com/embed/${video.id}`}
                 title={video.title}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -72,15 +90,15 @@ const VideosPage = ({ location }) => {
             </VideoItem>
           ))}
           {regularVideos.length === 0 && <p>No regular videos currently!</p>}
+          </RegularVideosGrid>
         </Section>
 
         <Section>
           <h2>Shorts</h2>
+          <ShortsGrid>
           {shorts.map((video) => (
             <VideoItem key={video.id}>
               <iframe
-                width="315"
-                height="560"
                 src={`https://www.youtube.com/embed/${video.id}`}
                 title={video.title}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -88,6 +106,7 @@ const VideosPage = ({ location }) => {
               ></iframe>
             </VideoItem>
           ))}
+          </ShortsGrid>
         </Section>
       </StyledVideosContainer>
     </Layout>
