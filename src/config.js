@@ -56,10 +56,10 @@ module.exports = {
       name: 'Notes',
       url: 'https://notes.alexshen.com.de/',
     },
-    {
-      name: 'Video Portfolio',
-      url: '/video_portfolio',
-    },
+    // {
+    //   name: 'Video Portfolio',
+    //   url: '/video_portfolio',
+    // },
   ],
 
   colors: {
