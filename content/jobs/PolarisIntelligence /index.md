@@ -3,12 +3,12 @@ date: '2024-09-30'
 title: 'Software Engineer Intern'
 company: 'Polaris Intelligence'
 location: 'Toronto, ON'
-range: 'September 2024 - Present'
+range: 'September 2024 - December 2024'
 url: 'https://www.polarisintelligence.com/'
 tags: ['JavaScript', 'jQuery', 'PHP', 'Symfony', 'PSQL']
 ---
 
-
-- Introduced live reloading and asset-versioning for developer servers using Symfony and Asset Mapper to significantly improve development build times.
-- Developed a survey-level search feature using JavaScript and PHP, enabling users to efficiently locate all questions listed under a survey, significantly improving data accessibility and ease of access.
+- Developed semantic search for surveys using JavaScript, PHP, and OpenAI to improve search accuracy.
+- Implemented a user consent EULA form using JavaScript and PHP, enhancing data security and legal compliance.
+- Replaced an outdated text editor dependency with Summernote and JavaScript to reduce security vulnerabilities.
 
