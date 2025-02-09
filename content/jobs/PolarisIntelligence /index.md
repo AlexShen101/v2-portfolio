@@ -5,7 +5,7 @@ company: 'Polaris Intelligence'
 location: 'Toronto, ON'
 range: 'September 2024 - December 2024'
 url: 'https://www.polarisintelligence.com/'
-tags: ['JavaScript', 'jQuery', 'PHP', 'Symfony', 'PSQL']
+tags: ['JavaScript', 'jQuery', 'PHP', 'Symfony', 'PSQL', 'Python', 'Selenium']
 ---
 
 - Developed semantic search for surveys using JavaScript, PHP, and OpenAI to improve search accuracy.

@@ -5,7 +5,7 @@ company: 'Polaris Intelligence'
 location: 'Toronto, ON'
 range: 'January 2024 - May 2024'
 url: 'https://www.polarisintelligence.com/'
-tags: ['JavaScript', 'jQuery', 'PHP', 'Symfony', 'PSQL']
+tags: ['JavaScript', 'jQuery', 'PHP', 'Symfony', 'PSQL', 'Python', 'Selenium']
 ---
 
 - Updated sidebar tabs and standardized modals using JavaScript and SCSS to create a modernized UI.

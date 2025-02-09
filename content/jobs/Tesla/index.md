@@ -5,7 +5,7 @@ company: 'Tesla'
 location: 'Austin, TX'
 range: 'January 2025 - Present'
 url: 'https://www.tesla.com/'
-tags: []
+tags: ['Python', 'Jenkins', 'Selenium']
 ---
 
 
