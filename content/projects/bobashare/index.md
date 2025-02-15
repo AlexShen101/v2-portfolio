@@ -2,7 +2,7 @@
 date: '2024-05-18'
 title: 'bobashare'
 github: 'https://github.com/AlexShen101/BobaTalks-Hackathon'
-external: 'http://bobashare.alexshen.com.de'
+external: ''
 ios: ''
 android: ''
 tech:
