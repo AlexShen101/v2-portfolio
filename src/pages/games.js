@@ -80,7 +80,7 @@ const GamesPage = ({ location }) => {
     <Layout location={location}>
       <main>
         <StyledGamesContainer>
-          <h1>My Games</h1>
+          <h1>Games I'm Playing</h1>
 
           <table>
             <thead>
