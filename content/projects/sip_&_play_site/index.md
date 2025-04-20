@@ -1,7 +1,7 @@
 ---
 date: '2024-07-12'
 title: 'sip & play redesign'
-github: 'https://github.com/AlexShen101/BobaTalks-Hackathon'
+github: 'https://github.com/AlexShen101/codedex-hackathon''
 external: 'https://codedex-hackathon-sip-n-play.vercel.app/'
 ios: ''
 android: ''

@@ -45,40 +45,47 @@ async function getGithubUrlFromIndexMd(dirPath) {
   }
 }
 
+
+async function checkGithubUrlExists(baseDir, tmpDir, githubUrl) {
+  const directories = [baseDir, tmpDir];
+  
+  for (const dir of directories) {
+    try {
+      const entries = await fs.readdir(dir, { withFileTypes: true });
+      for (const entry of entries) {
+        if (entry.isDirectory()) {
+          const projectPath = path.join(dir, entry.name);
+          const existingGithubUrl = await getGithubUrlFromIndexMd(projectPath);
+          if (existingGithubUrl === githubUrl) {
+            return true;
+          }
+        }
+      }
+    } catch (error) {
+      console.error(`Error checking directory ${dir}:`, error.message);
+    }
+  }
+  return false;
+}
+
 async function ensureUniqueDirectory(baseDir, name, githubUrl) {
-  let dir = path.join(baseDir, name);
+  const tmpDir = path.join(__dirname, '_tmp');
+  let dir = path.join(tmpDir, name);
   let counter = 1;
   console.log(`Checking for existing directory: ${dir}`);
-  
-  // First check if the base directory exists and has matching GitHub URL
-  try {
-    const existingGithubUrl = await getGithubUrlFromIndexMd(dir);
-    console.log(existingGithubUrl)
-    if (existingGithubUrl === null) {
-      console.log(`Directory ${dir} does not exist, using it.`);
-      return dir;
-    }
-
-    if (existingGithubUrl === githubUrl) {
-      console.log(`Skipping ${name} - already exists with same GitHub URL`);
-      return null;
-    }
-  } catch {
-    // Directory doesn't exist, we can use this name
-    return dir;
+ 
+  const exists = await checkGithubUrlExists(baseDir, tmpDir, githubUrl);
+  if (exists) {
+    console.log(`Directory ${dir} already exists with same GitHub URL`);
+    return null;
   }
 
-  console.log(`Directory ${dir} already exists, checking for unique name...`);
-
-  // If we reach here, we need to find a new unique name
+  // github url is unique, make unique dir name
   while (true) {
-    dir = path.join(baseDir, `${name}-${counter}`);
     try {
-      const existingGithubUrl = await getGithubUrlFromIndexMd(dir);
-      if (existingGithubUrl === githubUrl) {
-        console.log(`Skipping ${name}-${counter} - already exists with same GitHub URL`);
-        return null;
-      }
+      await fs.access(dir);
+      // Directory exists, try next number
+      dir = path.join(tmpDir, `${name}-${counter}`);
       counter++;
     } catch {
       // Directory doesn't exist, we can use this name
@@ -116,13 +123,16 @@ async function fetchGithubRepos() {
         cover: './thumbnail.png'
       };
 
+
       const slugifiedName = slugify(repo.name);
-      const projectsDir = path.join(__dirname, 'projects', 'tmp');
+      const projectsDir = path.join(__dirname);
+      const tmpDir = path.join(__dirname, '_tmp');
       
-      // Ensure projects directory exists
+      // Ensure dirs exist
       await fs.mkdir(projectsDir, { recursive: true });
+      await fs.mkdir(tmpDir, { recursive: true });
       
-      // Get unique directory path or null if should skip
+      // check if project exists in _tmp folder
       const projectDir = await ensureUniqueDirectory(projectsDir, slugifiedName, repoData.github);
       
       // Skip if directory with same GitHub URL already exists
