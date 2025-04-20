@@ -9,3 +9,5 @@ yarn.lock
 .DS_Store
 
 .vscode/
+
+/content/projects/tmp
