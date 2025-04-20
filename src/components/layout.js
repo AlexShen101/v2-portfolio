@@ -12,7 +12,6 @@ const StyledContent = styled.div`
 
 const Layout = ({ children, location }) => {
   const isHome = location.pathname === '/';
-  const isVideoPage = location.pathname === '/video_portfolio';
 
   // Sets target="_blank" rel="noopener noreferrer" on external links
   const handleExternalLinks = () => {
@@ -55,9 +54,9 @@ const Layout = ({ children, location }) => {
           </a>
 
           <StyledContent>
-            <Nav isHome={isHome} isVideoPage={isVideoPage} />
+            <Nav isHome={isHome}/>
 
-            <Social isHome={isHome} isVideoPage={isVideoPage} />
+            <Social isHome={isHome}/>
 
             <div id="content">
               {children}

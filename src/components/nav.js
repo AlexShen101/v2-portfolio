@@ -212,23 +212,17 @@ const Nav = ({ isHome, isVideoPage }) => {
           <>
             {Logo}
 
-            {isVideoPage ? (
-              <Link to="/">
-                <BackToHomeText>Back to Home</BackToHomeText>
-              </Link>
-            ) : (
-              <StyledLinks>
-                <ol>
-                  {navLinks &&
-                    navLinks.map(({ url, name }, i) => (
-                      <li key={i}>
-                        <Link to={url}>{name}</Link>
-                      </li>
-                    ))}
-                </ol>
-                {ResumeLink}
-              </StyledLinks>
-            )}
+            <StyledLinks>
+              <ol>
+                {navLinks &&
+                  navLinks.map(({ url, name }, i) => (
+                    <li key={i}>
+                      <Link to={url}>{name}</Link>
+                    </li>
+                  ))}
+              </ol>
+              {ResumeLink}
+            </StyledLinks>
           </>
         ) : (
           <>
@@ -240,37 +234,31 @@ const Nav = ({ isHome, isVideoPage }) => {
               )}
             </TransitionGroup>
 
-            {isVideoPage ? (
-              <Link to="/">
-                <BackToHomeText>Back to Home</BackToHomeText>
-              </Link>
-            ) : (
-              <StyledLinks>
-                <ol>
-                  <TransitionGroup component={null}>
-                    {isMounted &&
-                      navLinks &&
-                      navLinks.map(({ url, name }, i) => (
-                        <CSSTransition key={i} classNames={fadeDownClass} timeout={timeout}>
-                          <li key={i} style={{ transitionDelay: `${isHome ? i * 100 : 0}ms` }}>
-                            <Link to={url}>{name}</Link>
-                          </li>
-                        </CSSTransition>
-                      ))}
-                  </TransitionGroup>
-                </ol>
-
+            <StyledLinks>
+              <ol>
                 <TransitionGroup component={null}>
-                  {isMounted && (
-                    <CSSTransition classNames={fadeDownClass} timeout={timeout}>
-                      <div style={{ transitionDelay: `${isHome ? navLinks.length * 100 : 0}ms` }}>
-                        {ResumeLink}
-                      </div>
-                    </CSSTransition>
-                  )}
+                  {isMounted &&
+                    navLinks &&
+                    navLinks.map(({ url, name }, i) => (
+                      <CSSTransition key={i} classNames={fadeDownClass} timeout={timeout}>
+                        <li key={i} style={{ transitionDelay: `${isHome ? i * 100 : 0}ms` }}>
+                          <Link to={url}>{name}</Link>
+                        </li>
+                      </CSSTransition>
+                    ))}
                 </TransitionGroup>
-              </StyledLinks>
-            )}
+              </ol>
+
+              <TransitionGroup component={null}>
+                {isMounted && (
+                  <CSSTransition classNames={fadeDownClass} timeout={timeout}>
+                    <div style={{ transitionDelay: `${isHome ? navLinks.length * 100 : 0}ms` }}>
+                      {ResumeLink}
+                    </div>
+                  </CSSTransition>
+                )}
+              </TransitionGroup>
+            </StyledLinks>
           </>
         )}
 

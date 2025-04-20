@@ -155,9 +155,7 @@ const Hero = () => {
     <p>        
       I'm always trying to pick up and master new skills. Currently getting a 
       Bachelor's in Computer Science at the University of Waterloo. When I'm 
-      not coding, you can find me <a href="/video_portfolio" 
-      target="_blank" rel="noopener noreferrer">video editing</a>, learning 
-      3D modeling, or playing video games.
+      not coding, you can find me video editing, listening to new music, or playing video games.
     </p>
   );
 

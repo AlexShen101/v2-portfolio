@@ -46,8 +46,8 @@ const StyledSocialList = styled.ul`
 const Social = ({ isHome, isVideoPage }) => (
   <Side isHome={isHome} orientation="left">
     <StyledSocialList>
-      {(isVideoPage ? videoSocialMedia : socialMedia) &&
-        (isVideoPage ? videoSocialMedia : socialMedia).map(({ url, name }, i) => (
+      {socialMedia &&
+        socialMedia.map(({ url, name }, i) => (
           <li key={i}>
             <a href={url} aria-label={name} target="_blank" rel="noreferrer">
               <Icon name={name} />
