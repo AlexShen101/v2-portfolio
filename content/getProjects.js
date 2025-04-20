@@ -33,20 +33,60 @@ async function getLatestCommitDate(repo) {
   }
 }
 
-async function ensureUniqueDirectory(baseDir, name) {
+
+async function getGithubUrlFromIndexMd(dirPath) {
+  try {
+    const indexPath = path.join(dirPath, 'index.md');
+    const content = await fs.readFile(indexPath, 'utf8');
+    const githubMatch = content.match(/github: '([^']+)'/);
+    return githubMatch ? githubMatch[1] : null;
+  } catch (error) {
+    return null;
+  }
+}
+
+async function ensureUniqueDirectory(baseDir, name, githubUrl) {
   let dir = path.join(baseDir, name);
   let counter = 1;
+  console.log(`Checking for existing directory: ${dir}`);
   
+  // First check if the base directory exists and has matching GitHub URL
+  try {
+    const existingGithubUrl = await getGithubUrlFromIndexMd(dir);
+    console.log(existingGithubUrl)
+    if (existingGithubUrl === null) {
+      console.log(`Directory ${dir} does not exist, using it.`);
+      return dir;
+    }
+
+    if (existingGithubUrl === githubUrl) {
+      console.log(`Skipping ${name} - already exists with same GitHub URL`);
+      return null;
+    }
+  } catch {
+    // Directory doesn't exist, we can use this name
+    return dir;
+  }
+
+  console.log(`Directory ${dir} already exists, checking for unique name...`);
+
+  // If we reach here, we need to find a new unique name
   while (true) {
+    dir = path.join(baseDir, `${name}-${counter}`);
     try {
-      await fs.access(dir);
-      dir = path.join(baseDir, `${name}-${counter}`);
+      const existingGithubUrl = await getGithubUrlFromIndexMd(dir);
+      if (existingGithubUrl === githubUrl) {
+        console.log(`Skipping ${name}-${counter} - already exists with same GitHub URL`);
+        return null;
+      }
       counter++;
     } catch {
+      // Directory doesn't exist, we can use this name
       return dir;
     }
   }
 }
+
 
 async function fetchGithubRepos() {
   try {
@@ -82,9 +122,14 @@ async function fetchGithubRepos() {
       // Ensure projects directory exists
       await fs.mkdir(projectsDir, { recursive: true });
       
-      // Get unique directory path
-      const projectDir = await ensureUniqueDirectory(projectsDir, slugifiedName);
+      // Get unique directory path or null if should skip
+      const projectDir = await ensureUniqueDirectory(projectsDir, slugifiedName, repoData.github);
       
+      // Skip if directory with same GitHub URL already exists
+      if (!projectDir) {
+        continue;
+      }
+
       const projectContent = `---
 date: '${repoData.date}'
 title: '${repoData.title}'
