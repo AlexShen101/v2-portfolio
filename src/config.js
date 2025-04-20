@@ -11,31 +11,8 @@ module.exports = {
       url: 'https://www.linkedin.com/in/alexandershen2004',
     },
     {
-      name: 'Substack',
-      url: 'https://alexshen.substack.com',
-    },
-    {
       name: 'Email',
       url: 'mailto:alexander.shen@gmail.com',
-    },
-  ],
-
-  videoSocialMedia: [
-    {
-      name: 'YouTube',
-      url: 'https://www.youtube.com/@RandomHydra',
-    },
-    {
-      name: 'Twitter',
-      url: 'https://x.com/RandomHydr38443',
-    },
-    {
-      name: 'Instagram',
-      url: 'https://www.instagram.com/randomhydra/',
-    },
-    {
-      name: 'TikTok',
-      url: 'https://www.tiktok.com/@randomhydra',
     },
   ],
 

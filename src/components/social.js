@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { socialMedia, videoSocialMedia } from '@config';
+import { socialMedia } from '@config';
 import { Side } from '@components';
 import { Icon } from '@components/icons';
 
