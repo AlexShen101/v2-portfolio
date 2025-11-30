@@ -61,8 +61,7 @@ const StyledProject = styled.li`
       filter: grayscale(20%);
       transform: scale(1);
       transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-                  filter 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-                  transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        filter 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     &:hover {
@@ -152,23 +151,33 @@ const StyledProject = styled.li`
     margin-bottom: var(--spacing-md);
   }
 
+  @keyframes breathe {
+    0%,
+    100% {
+      filter: drop-shadow(0 0 1px var(--medium-gray));
+      opacity: 0.8;
+    }
+    50% {
+      filter: drop-shadow(0 0 2px var(--cream));
+      opacity: 1;
+    }
+  }
+
   .project-links {
     display: flex;
     justify-content: flex-end;
-    gap: var(--spacing-sm);
+    gap: var(--spacing-md);
 
     a {
-      padding: var(--spacing-sm);
-      background-color: var(--bg-tertiary);
-      border-radius: 50%;
-      border: 1px solid var(--border-primary);
-      transition: var(--transition-fast);
       color: var(--light-gray);
+      transition: var(--transition-fast);
+      animation: breathe 6s ease-in-out infinite;
 
       &:hover {
-        background-color: var(--cream);
-        border-color: var(--cream);
-        color: var(--bg-primary);
+        color: var(--cream);
+        filter: drop-shadow(0 0 6px var(--cream));
+        animation-play-state: paused;
+        opacity: 1;
       }
 
       svg {
@@ -252,7 +261,9 @@ const FeaturedProjectItem = ({ node, index }) => {
       style={{
         opacity,
         transform: `translateY(${translateY}px) scale(${scale})`,
-        transition: prefersReducedMotion ? 'none' : 'transform 0.1s ease-out, opacity 0.1s ease-out',
+        transition: prefersReducedMotion
+          ? 'none'
+          : 'transform 0.1s ease-out, opacity 0.1s ease-out',
       }}>
       <div className="project-image">
         <a href={external || github || '#'}>
@@ -352,7 +363,9 @@ const Featured = () => {
         style={{
           opacity: titleOpacity,
           transform: `translateY(${titleTranslateY}px)`,
-          transition: prefersReducedMotion ? 'none' : 'transform 0.1s ease-out, opacity 0.1s ease-out',
+          transition: prefersReducedMotion
+            ? 'none'
+            : 'transform 0.1s ease-out, opacity 0.1s ease-out',
         }}>
         Some Things I've Built
       </h2>
