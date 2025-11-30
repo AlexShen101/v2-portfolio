@@ -32,9 +32,8 @@ const Side = ({ children, isHome, orientation }) => {
     if (!isHome || prefersReducedMotion) {
       return;
     }
-    const timeout = setTimeout(() => setIsMounted(true), loaderDelay);
-    return () => clearTimeout(timeout);
-  }, []);
+    setIsMounted(true);
+  }, [isHome, prefersReducedMotion]);
 
   return (
     <StyledSideElement orientation={orientation}>

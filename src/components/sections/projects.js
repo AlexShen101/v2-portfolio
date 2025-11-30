@@ -11,9 +11,19 @@ const StyledProjectsSection = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 20vh; /* Adjust this value to match the height of your navbar */
-  margin-top: -20vh; /* Negative margin to pull the content up */
-  
+  padding: 20vh 120px 0;
+  margin-top: -20vh;
+
+  @media (max-width: 1080px) {
+    padding: 20vh 80px 0;
+  }
+  @media (max-width: 768px) {
+    padding: 20vh 40px 0;
+  }
+  @media (max-width: 480px) {
+    padding: 20vh 24px 0;
+  }
+
   h2 {
     font-size: clamp(24px, 5vw, var(--fz-heading));
   }
@@ -194,9 +204,17 @@ const Projects = () => {
       return;
     }
 
-    sr.reveal(revealTitle.current, srConfig());
-    revealProjects.current.forEach((ref, i) => sr.reveal(ref, srConfig(i * 100)));
-  }, []);
+    if (revealTitle.current && sr) {
+      sr.reveal(revealTitle.current, srConfig());
+    }
+    if (sr) {
+      revealProjects.current.forEach((ref, i) => {
+        if (ref) {
+          sr.reveal(ref, srConfig(i * 100));
+        }
+      });
+    }
+  }, [prefersReducedMotion]);
 
   const GRID_LIMIT = 6;
   const projects = data.projects.edges.filter(({ node }) => node);
@@ -256,7 +274,7 @@ const Projects = () => {
   };
 
   return (
-    <StyledProjectsSection>
+    <StyledProjectsSection style={prefersReducedMotion ? { opacity: 1 } : {}}>
       {/* <h2 ref={revealTitle}>Other Noteworthy Projects</h2> */}
 
       {/* <ul className="projects-grid">

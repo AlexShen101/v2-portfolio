@@ -19,20 +19,23 @@ const StyledSocialList = styled.ul`
     width: 1px;
     height: 90px;
     margin: 0 auto;
-    background-color: var(--light-slate);
+    background-color: var(--border-primary);
   }
 
   li {
     &:last-of-type {
-      margin-bottom: 20px;
+      margin-bottom: var(--spacing-md);
     }
 
     a {
-      padding: 10px;
+      padding: var(--spacing-sm);
+      color: var(--cream);
+      transition: var(--transition-fast);
 
       &:hover,
       &:focus {
-        transform: translateY(-3px);
+        color: var(--cream);
+        transform: translateY(-2px);
       }
 
       svg {

@@ -14,21 +14,22 @@ const StyledHeader = styled.header`
   position: fixed;
   top: 0;
   z-index: 11;
-  padding: 0px 50px;
+  padding: 0px 80px;
   width: 100%;
   height: var(--nav-height);
-  background-color: rgba(10, 25, 47, 0.85);
+  background-color: var(--bg-primary);
+  border-bottom: 1px solid var(--border-secondary);
   filter: none !important;
   pointer-events: auto !important;
   user-select: auto !important;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
   transition: var(--transition);
 
   @media (max-width: 1080px) {
-    padding: 0 40px;
+    padding: 0 60px;
   }
   @media (max-width: 768px) {
-    padding: 0 25px;
+    padding: 0 32px;
   }
 
   ${props =>
@@ -37,8 +38,8 @@ const StyledHeader = styled.header`
     css`
       height: var(--nav-scroll-height);
       transform: translateY(0px);
-      background-color: rgba(10, 25, 47, 0.85);
-      box-shadow: 0 10px 30px -10px var(--navy-shadow);
+      background-color: var(--bg-primary);
+      border-bottom: 1px solid var(--border-primary);
     `};
 
   ${props =>
@@ -47,7 +48,7 @@ const StyledHeader = styled.header`
     css`
       height: var(--nav-scroll-height);
       transform: translateY(calc(var(--nav-scroll-height) * -1));
-      box-shadow: 0 10px 30px -10px var(--navy-shadow);
+      border-bottom: 1px solid var(--border-primary);
     `};
 `;
 
@@ -55,18 +56,19 @@ const StyledNav = styled.nav`
   ${({ theme }) => theme.mixins.flexBetween};
   position: relative;
   width: 100%;
-  color: var(--lightest-slate);
-  font-family: var(--font-mono);
+  color: var(--light-gray);
+  font-family: var(--font-sans);
   counter-reset: item 0;
   z-index: 12;
 
   .logo {
     ${({ theme }) => theme.mixins.flexCenter};
-    color: var(--green);
+    color: var(--cream);
     width: 42px;
     height: 42px;
     position: relative;
     z-index: 1;
+    transition: var(--transition-fast);
 
     .hex-container {
       position: absolute;
@@ -74,7 +76,7 @@ const StyledNav = styled.nav`
       left: 0;
       z-index: -1;
       @media (prefers-reduced-motion: no-preference) {
-        transition: var(--transition);
+        transition: var(--transition-fast);
       }
     }
 
@@ -85,10 +87,10 @@ const StyledNav = styled.nav`
         fill: none;
         user-select: none;
         @media (prefers-reduced-motion: no-preference) {
-          transition: var(--transition);
+          transition: var(--transition-fast);
         }
         polygon {
-          fill: var(--navy);
+          fill: var(--bg-primary);
         }
       }
     }
@@ -96,10 +98,7 @@ const StyledNav = styled.nav`
     &:hover,
     &:focus {
       outline: 0;
-      transform: translate(-4px, -4px);
-      .hex-container {
-        transform: translate(4px, 3px);
-      }
+      opacity: 0.7;
     }
   }
 `;
@@ -119,20 +118,19 @@ const StyledLinks = styled.div`
     list-style: none;
 
     li {
-      margin: 0 5px;
+      margin: 0 var(--spacing-sm);
       position: relative;
-      counter-increment: item 1;
       font-size: var(--fz-xs);
 
       a {
-        padding: 10px;
+        padding: 8px 12px;
+        color: var(--light-gray);
+        transition: var(--transition-fast);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
 
-        &:before {
-          content: '0' counter(item) '.';
-          margin-right: 5px;
-          color: var(--green);
-          font-size: var(--fz-xxs);
-          text-align: right;
+        &:hover {
+          color: var(--cream);
         }
       }
     }
@@ -140,18 +138,18 @@ const StyledLinks = styled.div`
 
   .resume-button {
     ${({ theme }) => theme.mixins.smallButton};
-    margin-left: 15px;
-    font-size: var(--fz-xs);
+    margin-left: var(--spacing-sm);
+    font-size: var(--fz-xxs);
   }
 `;
 
 const BackToHomeText = styled.span`
-  color: var(--lightest-slate);
-  transition: var(--transition);
+  color: var(--light-gray);
+  transition: var(--transition-fast);
   font-size: var(--fz-md);
 
   &:hover {
-    color: var(--green);
+    color: var(--cream);
   }
 `;
 

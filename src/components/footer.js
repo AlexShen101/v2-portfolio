@@ -8,9 +8,10 @@ const StyledFooter = styled.footer`
   ${({ theme }) => theme.mixins.flexCenter};
   flex-direction: column;
   height: auto;
-  min-height: 70px;
-  padding: 15px;
+  min-height: 80px;
+  padding: var(--spacing-lg);
   text-align: center;
+  border-top: 1px solid var(--border-secondary);
 `;
 
 const StyledSocialLinks = styled.div`
@@ -19,9 +20,9 @@ const StyledSocialLinks = styled.div`
   @media (max-width: 768px) {
     display: block;
     width: 100%;
-    max-width: 270px;
-    margin: 0 auto 10px;
-    color: var(--light-slate);
+    max-width: 300px;
+    margin: 0 auto var(--spacing-sm);
+    color: var(--medium-gray);
   }
 
   ul {
@@ -31,7 +32,14 @@ const StyledSocialLinks = styled.div`
     list-style: none;
 
     a {
-      padding: 10px;
+      padding: var(--spacing-sm);
+      color: var(--medium-gray);
+      transition: var(--transition-fast);
+
+      &:hover {
+        color: var(--cream);
+      }
+
       svg {
         width: 20px;
         height: 20px;
@@ -41,26 +49,34 @@ const StyledSocialLinks = styled.div`
 `;
 
 const StyledCredit = styled.div`
-  color: var(--light-slate);
+  color: var(--medium-gray);
   font-family: var(--font-mono);
   font-size: var(--fz-xxs);
   line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 
   a {
-    padding: 10px;
+    padding: var(--spacing-sm);
+    color: var(--medium-gray);
+    transition: var(--transition-fast);
+
+    &:hover {
+      color: var(--cream);
+    }
   }
 
   .github-stats {
-    margin-top: 10px;
+    margin-top: var(--spacing-sm);
 
     & > span {
       display: inline-flex;
       align-items: center;
-      margin: 0 7px;
+      margin: 0 var(--spacing-xs);
     }
     svg {
       display: inline-block;
-      margin-right: 5px;
+      margin-right: var(--spacing-xs);
       width: 14px;
       height: 14px;
     }

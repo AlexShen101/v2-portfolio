@@ -2,25 +2,33 @@ import React, { useEffect, useRef } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import { GatsbyImage, getImage, StaticImage } from 'gatsby-plugin-image';
 import styled from 'styled-components';
-import sr from '@utils/sr';
-import { srConfig } from '@config';
 import { Icon } from '@components/icons';
-import { usePrefersReducedMotion } from '@hooks';
+import { usePrefersReducedMotion, useScrollAnimation } from '@hooks';
 
 const StyledFeatureSection = styled.section`
-  padding-top: 20vh; /* Adjust this value to match the height of your navbar */
-  margin-top: -25vh; /* Negative margin to pull the content up */
+  padding: 20vh 120px 0;
+  margin-top: 0vh;
+
+  @media (max-width: 1080px) {
+    padding: 20vh 80px 0;
+  }
+  @media (max-width: 768px) {
+    padding: 20vh 40px 0;
+  }
+  @media (max-width: 480px) {
+    padding: 20vh 24px 0;
+  }
 `;
 
 const StyledProjectsGrid = styled.ul`
   ${({ theme }) => theme.mixins.resetList};
   display: grid;
   grid-template-columns: 1fr;
-  grid-gap: 80px;
-  margin-top: 50px;
+  grid-gap: var(--spacing-xxxl);
+  margin-top: var(--spacing-xxl);
 
   @media (max-width: 768px) {
-    grid-gap: 40px;
+    grid-gap: var(--spacing-xxl);
   }
 `;
 
@@ -35,10 +43,8 @@ const StyledProject = styled.li`
     grid-row: 1 / -1; // Span all rows
     border-radius: var(--border-radius);
     overflow: hidden;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid var(--border-primary);
+    transition: var(--transition-fast);
 
     a {
       display: block;
@@ -51,11 +57,20 @@ const StyledProject = styled.li`
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0.5;
-      transition: opacity 0.3s ease, transform 0.3s ease;
+      opacity: 0.7;
+      filter: grayscale(20%);
+      transform: scale(1);
+      transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                  filter 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                  transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-      &:hover {
-        opacity: 0.8;
+    &:hover {
+      border-color: var(--cream);
+
+      .img {
+        opacity: 1;
+        filter: grayscale(0%);
         transform: scale(1.05);
       }
     }
@@ -67,130 +82,136 @@ const StyledProject = styled.li`
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.05);
+    padding: var(--spacing-lg);
+    background-color: var(--bg-secondary);
     border-radius: var(--border-radius);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    border: 1px solid var(--border-secondary);
+    transition: var(--transition-fast);
+
+    &:hover {
+      background-color: var(--bg-tertiary);
+      border-color: var(--border-primary);
+    }
   }
 
   .project-details {
     grid-column: 2 / 3;
     grid-row: 2 / 3;
-    background-color: rgba(255, 255, 255, 0.05);
-    padding: 20px;
+    background-color: var(--bg-secondary);
+    padding: var(--spacing-lg);
     border-radius: var(--border-radius);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    border: 1px solid var(--border-secondary);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    transition: var(--transition-fast);
+
+    &:hover {
+      background-color: var(--bg-tertiary);
+      border-color: var(--border-primary);
+    }
   }
 
   .tech-stack-heading {
-    font-size: var(--fz-md);
-    font-weight: 600;
-    color: var(--lightest-slate);
-    margin-bottom: 20px;
+    font-size: var(--fz-xs);
+    font-weight: 400;
+    color: var(--medium-gray);
+    margin-bottom: var(--spacing-md);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.1em;
+    font-family: var(--font-mono);
   }
 
   .project-tech-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: var(--spacing-xs);
     padding: 0;
     margin: 0;
     list-style: none;
 
     li {
-      background-color: rgba(255, 255, 255, 0.05);
-      padding: 10px;
-      border-radius: 8px;
-      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      transition: all 0.3s ease;
-      font-size: var(--fz-sm);
-      font-weight: 500;
+      background-color: var(--bg-tertiary);
+      color: var(--light-gray);
+      padding: 6px 12px;
+      border-radius: var(--border-radius);
+      border: 1px solid var(--border-primary);
+      transition: var(--transition-fast);
+      font-size: var(--fz-xxs);
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
 
       &:hover {
-        background: linear-gradient(
-          135deg, 
-          rgba(100, 255, 218, 0.1) 0%, 
-          rgba(10, 25, 47, 0.7) 100%
-        );
-        box-shadow: 0 8px 12px 0 rgba(100, 255, 218, 0.1);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        border: 1px solid rgba(100, 255, 218, 0.3);
-        transform: translateY(-2px);
+        background-color: var(--bg-elevated);
+        border-color: var(--medium-gray);
+        color: var(--cream);
       }
     }
-    
-    margin-bottom: 15px;
+
+    margin-bottom: var(--spacing-md);
   }
 
   .project-links {
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
+    gap: var(--spacing-sm);
 
     a {
-      padding: 10px;
-      background-color: rgba(255, 255, 255, 0.05);
+      padding: var(--spacing-sm);
+      background-color: var(--bg-tertiary);
       border-radius: 50%;
-      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      transition: all 0.3s ease;
+      border: 1px solid var(--border-primary);
+      transition: var(--transition-fast);
+      color: var(--light-gray);
 
       &:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-        transform: translateY(-2px);
+        background-color: var(--cream);
+        border-color: var(--cream);
+        color: var(--bg-primary);
       }
 
       svg {
-        width: 22px;
-        height: 22px;
-        transition: transform 0.2s ease;
-
-        &:hover {
-          transform: scale(1.1);
-        }
+        width: 20px;
+        height: 20px;
+        transition: var(--transition-fast);
       }
     }
   }
 
   .project-description {
-    margin-top: 10px;
+    margin-top: var(--spacing-sm);
+    color: var(--light-gray);
+    line-height: 1.6;
+
+    p {
+      margin: 0;
+    }
   }
 
   .project-overline {
-    color: var(--green);
+    color: var(--medium-gray);
     font-family: var(--font-mono);
-    font-size: var(--fz-xs);
+    font-size: var(--fz-xxs);
     font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
   }
 
   .project-title {
-    color: var(--lightest-slate);
-    font-size: clamp(24px, 5vw, 28px);
+    color: var(--cream);
+    font-size: clamp(20px, 4vw, 24px);
+    font-weight: 500;
+    margin-top: var(--spacing-xs);
 
     a {
       text-decoration: none;
       color: inherit;
-      
+      transition: var(--transition-fast);
+
       &:hover,
       &:focus {
-        color: var(--green);
+        opacity: 0.7;
       }
     }
   }
@@ -208,11 +229,83 @@ const StyledProject = styled.li`
   }
 `;
 
+const FeaturedProjectItem = ({ node, index }) => {
+  const { frontmatter, html } = node;
+  const { external, title, tech, github, cover } = frontmatter;
+  const image = getImage(cover);
+  const prefersReducedMotion = usePrefersReducedMotion();
+
+  const { elementRef, scrollProgress } = useScrollAnimation({
+    threshold: 0.15,
+    rootMargin: '0px 0px -10% 0px',
+  });
+
+  // Calculate animation values based on scroll progress
+  const opacity = prefersReducedMotion ? 1 : scrollProgress;
+  const translateY = prefersReducedMotion ? 0 : (1 - scrollProgress) * 40;
+  const scale = prefersReducedMotion ? 1 : 0.95 + scrollProgress * 0.05;
+
+  return (
+    <StyledProject
+      ref={elementRef}
+      className={index % 2 === 1 ? 'right-image' : ''}
+      style={{
+        opacity,
+        transform: `translateY(${translateY}px) scale(${scale})`,
+        transition: prefersReducedMotion ? 'none' : 'transform 0.1s ease-out, opacity 0.1s ease-out',
+      }}>
+      <div className="project-image">
+        <a href={external || github || '#'}>
+          {cover ? (
+            <GatsbyImage image={image} alt={title} className="img" />
+          ) : (
+            <StaticImage src="./thumbnail.png" alt={title} className="img" />
+          )}
+        </a>
+      </div>
+
+      <div className="project-content">
+        <p className="project-overline">Featured Project</p>
+        <h3 className="project-title">
+          <a href={external}>{title}</a>
+        </h3>
+        <div className="project-description" dangerouslySetInnerHTML={{ __html: html }} />
+      </div>
+
+      <div className="project-details">
+        {tech.length && (
+          <>
+            <h4 className="tech-stack-heading">Built With</h4>
+            <ul className="project-tech-list">
+              {tech.map((tech, i) => (
+                <li key={i}>{tech}</li>
+              ))}
+            </ul>
+          </>
+        )}
+
+        <div className="project-links">
+          {github && (
+            <a href={github} aria-label="GitHub Link">
+              <Icon name="GitHub" />
+            </a>
+          )}
+          {external && (
+            <a href={external} aria-label="External Link" className="external">
+              <Icon name="External" />
+            </a>
+          )}
+        </div>
+      </div>
+    </StyledProject>
+  );
+};
+
 const Featured = () => {
   const data = useStaticQuery(graphql`
     {
       projects: allMarkdownRemark(
-        filter: { 
+        filter: {
           fileAbsolutePath: { regex: "/content/projects/.*/index\\.md/" },
           frontmatter: { featured: { eq: true } }
           }
@@ -238,87 +331,37 @@ const Featured = () => {
     }
   `);
 
-  console.log(data)
-
+  console.log(data);
 
   const featuredProjects = data.projects.edges.filter(({ node }) => node);
-  const revealTitle = useRef(null);
-  const revealProjects = useRef([]);
   const prefersReducedMotion = usePrefersReducedMotion();
 
-  useEffect(() => {
-    if (prefersReducedMotion) {
-      return;
-    }
+  const { elementRef: titleRef, scrollProgress: titleProgress } = useScrollAnimation({
+    threshold: 0.2,
+    rootMargin: '0px 0px -5% 0px',
+  });
 
-    sr.reveal(revealTitle.current, srConfig());
-    revealProjects.current.forEach((ref, i) => sr.reveal(ref, srConfig(i * 100)));
-  }, []);
+  const titleOpacity = prefersReducedMotion ? 1 : titleProgress;
+  const titleTranslateY = prefersReducedMotion ? 0 : (1 - titleProgress) * 30;
 
   return (
     <StyledFeatureSection id="projects">
-      <h2 className="numbered-heading" ref={revealTitle}>
+      <h2
+        className="numbered-heading"
+        ref={titleRef}
+        style={{
+          opacity: titleOpacity,
+          transform: `translateY(${titleTranslateY}px)`,
+          transition: prefersReducedMotion ? 'none' : 'transform 0.1s ease-out, opacity 0.1s ease-out',
+        }}>
         Some Things I've Built
       </h2>
 
       <StyledProjectsGrid>
         {featuredProjects &&
-          featuredProjects.map(({ node }, i) => {
-            const { frontmatter, html } = node;
-            const { external, title, tech, github, cover } = frontmatter;
-            const image = getImage(cover);
-
-            return (
-              <StyledProject key={i} ref={el => (revealProjects.current[i] = el)} className={i % 2 === 1 ? 'right-image' : ''}>
-                <div className="project-image">
-                  <a href={external || github || '#'}>
-                    {cover ? (
-                      <GatsbyImage image={image} alt={title} className="img" />
-                    ) : (
-                      <StaticImage src="./thumbnail.png" alt={title} className="img" />
-                    )}
-                  </a>
-                </div>
-
-                <div className="project-content">
-                  <p className="project-overline">Featured Project</p>
-                  <h3 className="project-title">
-                    <a href={external}>{title}</a>
-                  </h3>
-                  <div
-                    className="project-description"
-                    dangerouslySetInnerHTML={{ __html: html }}
-                  />
-                </div>
-
-                <div className="project-details">
-                  {tech.length && (
-                    <>
-                      <h4 className="tech-stack-heading">Built With</h4>
-                      <ul className="project-tech-list">
-                        {tech.map((tech, i) => (
-                          <li key={i}>{tech}</li>
-                        ))}
-                      </ul>
-                    </>
-                  )}
-
-                  <div className="project-links">
-                    {github && (
-                      <a href={github} aria-label="GitHub Link">
-                        <Icon name="GitHub" />
-                      </a>
-                    )}
-                    {external && (
-                      <a href={external} aria-label="External Link" className="external">
-                        <Icon name="External" />
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </StyledProject>
-            );
-          })}
+          featuredProjects.map(({ node }, i) => (
+            <FeaturedProjectItem key={i} node={node} index={i} />
+          ))}
       </StyledProjectsGrid>
     </StyledFeatureSection>
   );

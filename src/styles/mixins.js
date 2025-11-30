@@ -1,22 +1,26 @@
 import { css } from 'styled-components';
 
 const button = css`
-  color: var(--green);
+  color: var(--cream);
   background-color: transparent;
-  border: 1px solid var(--green);
+  border: 1px solid var(--border-primary);
   border-radius: var(--border-radius);
   font-size: var(--fz-xs);
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   line-height: 1;
   text-decoration: none;
-  padding: 1.25rem 1.75rem;
-  transition: var(--transition);
+  padding: 14px 28px;
+  transition: var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 400;
 
   &:hover,
   &:focus-visible {
     outline: none;
-    box-shadow: 4px 4px 0 0 var(--green);
-    transform: translate(-5px, -5px);
+    background-color: var(--cream);
+    color: var(--bg-primary);
+    border-color: var(--cream);
   }
   &:after {
     display: none !important;
@@ -42,11 +46,11 @@ const mixins = {
     text-decoration-skip-ink: auto;
     color: inherit;
     position: relative;
-    transition: var(--transition);
+    transition: var(--transition-fast);
 
     &:hover,
     &:focus-visible {
-      color: var(--green);
+      color: var(--cream);
       outline: 0;
     }
   `,
@@ -54,19 +58,19 @@ const mixins = {
   inlineLink: css`
     display: inline-block;
     position: relative;
-    color: var(--green);
-    transition: var(--transition);
+    color: var(--cream);
+    transition: var(--transition-fast);
 
     &:hover,
     &:focus-visible {
-      color: var(--green);
+      color: var(--cream);
       outline: 0;
       &:after {
         width: 100%;
       }
       & > * {
-        color: var(--green) !important;
-        transition: var(--transition);
+        color: var(--cream) !important;
+        transition: var(--transition-fast);
       }
     }
     &:after {
@@ -76,10 +80,10 @@ const mixins = {
       height: 1px;
       position: relative;
       bottom: 0.37em;
-      background-color: var(--green);
-      opacity: 0.5;
+      background-color: var(--cream);
+      opacity: 0.3;
       @media (prefers-reduced-motion: no-preference) {
-        transition: var(--transition);
+        transition: var(--transition-fast);
       }
     }
   `,
@@ -87,22 +91,26 @@ const mixins = {
   button,
 
   smallButton: css`
-    color: var(--green);
+    color: var(--cream);
     background-color: transparent;
-    border: 1px solid var(--green);
+    border: 1px solid var(--border-primary);
     border-radius: var(--border-radius);
-    padding: 0.75rem 1rem;
-    font-size: var(--fz-xs);
-    font-family: var(--font-mono);
+    padding: 10px 20px;
+    font-size: var(--fz-xxs);
+    font-family: var(--font-sans);
     line-height: 1;
     text-decoration: none;
-    transition: var(--transition);
+    transition: var(--transition-fast);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 400;
 
     &:hover,
     &:focus-visible {
       outline: none;
-      box-shadow: 3px 3px 0 0 var(--green);
-      transform: translate(-4px, -4px);
+      background-color: var(--cream);
+      color: var(--bg-primary);
+      border-color: var(--cream);
     }
     &:after {
       display: none !important;
@@ -110,22 +118,26 @@ const mixins = {
   `,
 
   bigButton: css`
-    color: var(--green);
+    color: var(--cream);
     background-color: transparent;
-    border: 1px solid var(--green);
+    border: 1px solid var(--border-primary);
     border-radius: var(--border-radius);
-    padding: 1.25rem 1.75rem;
+    padding: 18px 36px;
     font-size: var(--fz-sm);
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     line-height: 1;
     text-decoration: none;
-    transition: var(--transition);
+    transition: var(--transition-fast);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 400;
 
     &:hover,
     &:focus-visible {
       outline: none;
-      box-shadow: 4px 4px 0 0 var(--green);
-      transform: translate(-5px, -5px);
+      background-color: var(--cream);
+      color: var(--bg-primary);
+      border-color: var(--cream);
     }
     &:after {
       display: none !important;
@@ -133,12 +145,12 @@ const mixins = {
   `,
 
   boxShadow: css`
-    box-shadow: 0 10px 30px -15px var(--navy-shadow);
-    transition: var(--transition);
+    box-shadow: 0 2px 8px var(--shadow);
+    transition: var(--transition-fast);
 
     &:hover,
     &:focus-visible {
-      box-shadow: 0 20px 30px -15px var(--navy-shadow);
+      box-shadow: 0 4px 16px var(--shadow);
     }
   `,
 
@@ -146,16 +158,16 @@ const mixins = {
     padding: 0;
     margin: 0;
     list-style: none;
-    font-size: var(--fz-lg);
+    font-size: var(--fz-md);
     li {
       position: relative;
-      padding-left: 30px;
-      margin-bottom: 10px;
+      padding-left: var(--spacing-md);
+      margin-bottom: var(--spacing-sm);
       &:before {
-        content: '▹';
+        content: '—';
         position: absolute;
         left: 0;
-        color: var(--green);
+        color: var(--medium-gray);
       }
     }
   `,

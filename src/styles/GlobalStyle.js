@@ -21,14 +21,14 @@ const GlobalStyle = createGlobalStyle`
   }
 
   ::selection {
-    background-color: var(--lightest-navy);
-    color: var(--lightest-slate);
+    background-color: var(--cream);
+    color: var(--bg-primary);
   }
 
   /* Provide basic, default focus styles.*/
   :focus {
-    outline: 2px dashed var(--green);
-    outline-offset: 3px;
+    outline: 1px solid var(--border-primary);
+    outline-offset: 2px;
   }
 
   /*
@@ -46,25 +46,25 @@ const GlobalStyle = createGlobalStyle`
     focus.
   */
   :focus-visible {
-    outline: 2px dashed var(--green);
-    outline-offset: 3px;
+    outline: 1px solid var(--cream);
+    outline-offset: 2px;
   }
 
-  /* Scrollbar Styles */
+  /* Scrollbar Styles - Minimal */
   html {
     scrollbar-width: thin;
-    scrollbar-color: var(--dark-slate) var(--navy);
+    scrollbar-color: var(--border-primary) var(--bg-primary);
   }
   ::-webkit-scrollbar {
-    width: 12px;
+    width: 8px;
   }
   ::-webkit-scrollbar-track {
-    background: var(--navy);
+    background: var(--bg-primary);
   }
   ::-webkit-scrollbar-thumb {
-    background-color: var(--dark-slate);
-    border: 3px solid var(--navy);
-    border-radius: 10px;
+    background-color: var(--border-primary);
+    border: 2px solid var(--bg-primary);
+    border-radius: 0;
   }
 
   body {
@@ -74,14 +74,14 @@ const GlobalStyle = createGlobalStyle`
     overflow-x: hidden;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-    background-color: var(--navy);
-    color: var(--slate);
+    background-color: var(--bg-primary);
+    color: var(--light-gray);
     font-family: var(--font-sans);
-    font-size: var(--fz-xl);
-    line-height: 1.3;
+    font-size: var(--fz-md);
+    line-height: 1.6;
 
     @media (max-width: 480px) {
-      font-size: var(--fz-lg);
+      font-size: var(--fz-sm);
     }
 
     &.hidden {
@@ -96,7 +96,7 @@ const GlobalStyle = createGlobalStyle`
       }
 
       #content > * {
-        filter: blur(5px) brightness(0.7);
+        filter: blur(3px);
         transition: var(--transition);
         pointer-events: none;
         user-select: none;
@@ -114,47 +114,19 @@ const GlobalStyle = createGlobalStyle`
   main {
     margin: 0 auto;
     width: 100%;
-    max-width: 1600px;
+    max-width: var(--max-width);
     min-height: 100vh;
-    padding: 200px 150px;
-
-    @media (max-width: 1080px) {
-      padding: 200px 100px;
-    }
-    @media (max-width: 768px) {
-      padding: 150px 50px;
-    }
-    @media (max-width: 480px) {
-      padding: 125px 25px;
-    }
+    padding: 0;
 
     &.fillHeight {
-      padding: 0 150px;
-
-      @media (max-width: 1080px) {
-        padding: 0 100px;
-      }
-      @media (max-width: 768px) {
-        padding: 0 50px;
-      }
-      @media (max-width: 480px) {
-        padding: 0 25px;
-      }
+      padding: 0;
     }
   }
 
   section {
-    margin: 0 auto;
-    padding: 60px 0;
-    max-width: 1000px;
-
-    @media (max-width: 768px) {
-      padding: 40px 0;
-    }
-
-    @media (max-width: 480px) {
-      padding: 20px 0;
-    }
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
   }
 
   h1,
@@ -163,92 +135,61 @@ const GlobalStyle = createGlobalStyle`
   h4,
   h5,
   h6 {
-    margin: 0 0 10px 0;
-    font-weight: 600;
-    color: var(--lightest-slate);
-    line-height: 1.1;
+    margin: 0 0 var(--spacing-sm) 0;
+    font-weight: 500;
+    color: var(--cream);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
   }
 
   .big-heading {
     margin: 0;
-    font-size: clamp(40px, 8vw, 80px);
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 400;
+    letter-spacing: -0.03em;
   }
 
   .medium-heading {
     margin: 0;
-    font-size: clamp(40px, 8vw, 60px);
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 400;
+    letter-spacing: -0.02em;
   }
 
   .numbered-heading {
     display: flex;
     align-items: center;
     position: relative;
-    margin: 10px 0 40px;
+    margin: 0 0 var(--spacing-xxl) 0;
     width: 100%;
-    font-size: clamp(26px, 5vw, var(--fz-heading));
+    font-size: clamp(28px, 5vw, 40px);
     white-space: nowrap;
+    font-weight: 400;
 
     &:before {
       position: relative;
-      bottom: 4px;
       counter-increment: section;
-      content: '0' counter(section) '.';
-      margin-right: 10px;
-      color: var(--green);
+      content: '0' counter(section);
+      margin-right: var(--spacing-md);
+      color: var(--medium-gray);
       font-family: var(--font-mono);
-      font-size: clamp(var(--fz-md), 3vw, var(--fz-xl));
+      font-size: clamp(var(--fz-sm), 2vw, var(--fz-md));
       font-weight: 400;
 
       @media (max-width: 480px) {
-        margin-bottom: -3px;
-        margin-right: 5px;
+        margin-right: var(--spacing-sm);
       }
     }
 
     &:after {
       content: '';
-      display: block;
-      position: relative;
-      top: -5px;
-      width: 300px;
-      height: 1px;
-      margin-left: 20px;
-      background-color: var(--lightest-navy);
-
-      @media (max-width: 1080px) {
-        width: 200px;
-      }
-      @media (max-width: 768px) {
-        width: 100%;
-      }
-      @media (max-width: 600px) {
-        margin-left: 10px;
-      }
+      display: none; /* Removed line for cleaner minimal look */
     }
-  }
-
-  img,
-  svg,
-  .gatsby-image-wrapper {
-    width: 100%;
-    max-width: 100%;
-    vertical-align: middle;
   }
 
   img[alt=""],
   img:not([alt]) {
     filter: blur(5px);
-  }
-
-  svg {
-    width: 100%;
-    height: 100%;
-    fill: currentColor;
-    vertical-align: middle;
-
-    &.feather {
-      fill: none;
-    }
   }
 
   a {
@@ -257,16 +198,8 @@ const GlobalStyle = createGlobalStyle`
     text-decoration-skip-ink: auto;
     color: inherit;
     position: relative;
-    transition: var(--transition);
+    transition: var(--transition-fast);
 
-    &:hover,
-    &:focus {
-      color: var(--green);
-    }
-
-    &.inline-link {
-      ${({ theme }) => theme.mixins.inlineLink};
-    }
   }
 
   button {
@@ -303,11 +236,11 @@ const GlobalStyle = createGlobalStyle`
     }
 
     & > code {
-      background-color: var(--light-navy);
-      color: var(--white);
+      background-color: var(--bg-tertiary);
+      color: var(--cream);
       font-size: var(--fz-sm);
       border-radius: var(--border-radius);
-      padding: 0.3em 0.5em;
+      padding: 0.25em 0.5em;
     }
   }
 
@@ -316,43 +249,43 @@ const GlobalStyle = createGlobalStyle`
       padding: 0;
       margin: 0;
       list-style: none;
-      font-size: var(--fz-lg);
+      font-size: var(--fz-md);
       li {
         position: relative;
-        padding-left: 30px;
-        margin-bottom: 10px;
+        padding-left: var(--spacing-md);
+        margin-bottom: var(--spacing-sm);
         &:before {
-          content: '▹';
+          content: '—';
           position: absolute;
           left: 0;
-          color: var(--green);
+          color: var(--medium-gray);
         }
       }
     }
   }
 
   blockquote {
-    border-left-color: var(--green);
+    border-left-color: var(--border-primary);
     border-left-style: solid;
     border-left-width: 1px;
     margin-left: 0px;
     margin-right: 0px;
-    padding-left: 1.5rem;
+    padding-left: var(--spacing-md);
 
     p {
       font-style: italic;
-      font-size: 24px;
+      font-size: var(--fz-lg);
     }
   }
 
   hr {
-    background-color: var(--lightest-navy);
+    background-color: var(--border-primary);
     height: 1px;
     border-width: 0px;
     border-style: initial;
     border-color: initial;
     border-image: initial;
-    margin: 1rem;
+    margin: var(--spacing-xl) 0;
   }
 
   code {
@@ -372,8 +305,8 @@ const GlobalStyle = createGlobalStyle`
 
     &:hover,
     &:focus {
-      background-color: var(--green);
-      color: var(--navy);
+      background-color: var(--cream);
+      color: var(--bg-primary);
       top: 0;
       left: 0;
       width: auto;
@@ -386,53 +319,58 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #logo {
-    color: var(--green);
+    color: var(--cream);
   }
 
   .overline {
-    color: var(--green);
+    color: var(--medium-gray);
     font-family: var(--font-mono);
-    font-size: var(--fz-md);
+    font-size: var(--fz-xs);
     font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
   }
 
   .subtitle {
-    color: var(--green);
-    margin: 0 0 20px 0;
-    font-size: var(--fz-md);
+    color: var(--medium-gray);
+    margin: 0 0 var(--spacing-md) 0;
+    font-size: var(--fz-sm);
     font-family: var(--font-mono);
     font-weight: 400;
-    line-height: 1.5;
+    line-height: 1.6;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+
     @media (max-width: 1080px) {
-      font-size: var(--fz-sm);
+      font-size: var(--fz-xs);
     }
     @media (max-width: 768px) {
-      font-size: var(--fz-xs);
+      font-size: var(--fz-xxs);
     }
 
     a {
       ${({ theme }) => theme.mixins.inlineLink};
-      line-height: 1.5;
+      line-height: 1.6;
     }
   }
 
   .breadcrumb {
     display: flex;
     align-items: center;
-    margin-bottom: 50px;
-    color: var(--green);
+    margin-bottom: var(--spacing-xl);
+    color: var(--medium-gray);
 
     .arrow {
       display: block;
-      margin-right: 10px;
+      margin-right: var(--spacing-sm);
       padding-top: 4px;
     }
 
     a {
       ${({ theme }) => theme.mixins.inlineLink};
       font-family: var(--font-mono);
-      font-size: var(--fz-sm);
-      font-weight: 600;
+      font-size: var(--fz-xs);
+      font-weight: 400;
       line-height: 1.5;
       text-transform: uppercase;
       letter-spacing: 0.1em;

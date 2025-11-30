@@ -8,11 +8,38 @@ import sr from '@utils/sr';
 import { usePrefersReducedMotion } from '@hooks';
 
 const StyledJobsSection = styled.section`
-  max-width: 1100px;
-  padding-top: 30vh; /* Adjust this value to match the height of your navbar */
-  margin-top: -20vh; /* Negative margin to pull the content up */
-  
+  max-width: 100%;
+  padding: 10vh 120px var(--spacing-xl);
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, #fff0 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, #fff0 1px);
+  background-size: 40px 40px;
+  border: 1px solid rgb(51 51 51);
+  border-right-width: 0px;
+  border-left-width: 0px;
+  animation: gridMove 4.5s linear infinite;
+
+  @keyframes gridMove {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: -40px -40px;
+    }
+  }
+
+  @media (max-width: 1080px) {
+    padding: 30vh 80px 0;
+  }
+  @media (max-width: 768px) {
+    padding: 30vh 40px 0;
+  }
+  @media (max-width: 480px) {
+    padding: 30vh 24px 0;
+  }
+
   .inner {
+    max-width: 1100px;
+    margin: 0 auto;
     display: flex;
 
     @media (max-width: 600px) {
@@ -74,30 +101,34 @@ const StyledTabButton = styled.button`
   align-items: center;
   width: 100%;
   height: var(--tab-height);
-  padding: 0 20px 2px;
-  border-left: 2px solid var(--lightest-navy);
+  padding: 0 var(--spacing-md) 2px;
+  border-left: 1px solid var(--border-secondary);
   background-color: transparent;
-  color: ${({ isActive }) => (isActive ? 'var(--green)' : 'var(--slate)')};
-  font-family: var(--font-mono);
+  color: ${({ isActive }) => (isActive ? 'var(--cream)' : 'var(--medium-gray)')};
+  font-family: var(--font-sans);
   font-size: var(--fz-xs);
   text-align: left;
   white-space: nowrap;
+  transition: var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 
   @media (max-width: 768px) {
-    padding: 0 15px 2px;
+    padding: 0 var(--spacing-sm) 2px;
   }
   @media (max-width: 600px) {
     ${({ theme }) => theme.mixins.flexCenter};
-    min-width: 120px;
-    padding: 0 15px;
+    min-width: 140px;
+    padding: 0 var(--spacing-sm);
     border-left: 0;
-    border-bottom: 2px solid var(--lightest-navy);
+    border-bottom: 1px solid var(--border-secondary);
     text-align: center;
   }
 
   &:hover,
   &:focus {
-    background-color: var(--light-navy);
+    background-color: var(--bg-tertiary);
+    color: var(--cream);
   }
 `;
 
@@ -106,22 +137,22 @@ const StyledHighlight = styled.div`
   top: 0;
   left: 0;
   z-index: 10;
-  width: 2px;
+  width: 1px;
   height: var(--tab-height);
   border-radius: var(--border-radius);
-  background: var(--green);
+  background: var(--cream);
   transform: translateY(calc(${({ activeTabId }) => activeTabId} * var(--tab-height)));
-  transition: transform 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
-  transition-delay: 0.1s;
+  transition: transform 0.2s var(--easing);
+  transition-delay: 0.05s;
 
   @media (max-width: 600px) {
     top: auto;
     bottom: 0;
     width: 100%;
-    max-width: var(--tab-width);
-    height: 2px;
+    max-width: 140px;
+    height: 1px;
     margin-left: 50px;
-    transform: translateX(calc(${({ activeTabId }) => activeTabId} * var(--tab-width)));
+    transform: translateX(calc(${({ activeTabId }) => activeTabId} * 140px));
   }
   @media (max-width: 480px) {
     margin-left: 25px;
@@ -131,75 +162,84 @@ const StyledHighlight = styled.div`
 const StyledTabPanels = styled.div`
   position: relative;
   width: 100%;
-  margin-left: 20px;
+  margin-left: var(--spacing-xl);
 
   @media (max-width: 600px) {
     margin-left: 0;
   }
 
   strong {
-    color: var(--green);
-    font-weight: 400;
+    color: var(--cream);
+    font-weight: 500;
   }
 `;
 
 const StyledTabPanel = styled.div`
   width: 100%;
   height: auto;
-  padding: 10px 5px;
+  padding: var(--spacing-sm) var(--spacing-xs);
+
+  @keyframes neonBreathe {
+    0%,
+    100% {
+      text-shadow: 0 0 10px rgba(0, 255, 148, 0.6), 0 0 20px rgba(0, 255, 148, 0.4),
+        0 0 30px rgba(0, 255, 148, 0.2);
+    }
+    50% {
+      text-shadow: 0 0 5px rgba(0, 255, 148, 0.4), 0 0 10px rgba(0, 255, 148, 0.2);
+    }
+  }
 
   ul {
     ${({ theme }) => theme.mixins.fancyList};
   }
 
   h3 {
-    margin-bottom: 2px;
-    font-size: var(--fz-xxl);
+    margin-bottom: var(--spacing-xs);
+    font-size: var(--fz-xl);
     font-weight: 500;
-    line-height: 1.3;
+    line-height: 1.4;
 
     .company {
-      color: var(--green);
+      color: var(--decide-neon);
+      font-weight: 400;
+      text-shadow: 0 0 10px rgba(0, 255, 148, 0.6);
+      animation: neonBreathe 3s ease-in-out infinite;
     }
   }
 
   .range {
-    margin-bottom: 25px;
-    color: var(--light-slate);
+    margin-bottom: var(--spacing-lg);
+    color: var(--medium-gray);
     font-family: var(--font-mono);
-    font-size: var(--fz-xs);
+    font-size: var(--fz-xxs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
   .tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 20px;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-lg);
   }
 
   .tag {
-    background-color: rgba(255, 255, 255, 0.05);
-    padding: 8px 12px;
-    border-radius: 8px;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    transition: all 0.3s ease;
-    font-size: var(--fz-sm);
-    font-weight: 500;
+    background-color: var(--bg-tertiary);
+    color: var(--light-gray);
+    padding: 6px 12px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-primary);
+    transition: var(--transition-fast);
+    font-size: var(--fz-xxs);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 
     &:hover {
-      background: linear-gradient(
-        135deg, 
-        rgba(100, 255, 218, 0.1) 0%, 
-        rgba(10, 25, 47, 0.7) 100%
-      );
-      box-shadow: 0 8px 12px 0 rgba(100, 255, 218, 0.1);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(100, 255, 218, 0.3);
-      transform: translateY(-2px);
+      background-color: var(--bg-elevated);
+      border-color: var(--medium-gray);
+      color: var(--cream);
     }
   }
 `;
@@ -241,8 +281,10 @@ const Jobs = () => {
       return;
     }
 
-    sr.reveal(revealContainer.current, srConfig());
-  }, []);
+    if (revealContainer.current && sr) {
+      sr.reveal(revealContainer.current, srConfig());
+    }
+  }, [prefersReducedMotion]);
 
   const focusTab = () => {
     if (tabs.current[tabFocus]) {
@@ -284,7 +326,10 @@ const Jobs = () => {
   };
 
   return (
-    <StyledJobsSection id="jobs" ref={revealContainer}>
+    <StyledJobsSection
+      id="jobs"
+      ref={revealContainer}
+      style={prefersReducedMotion ? { opacity: 1 } : {}}>
       <h2 className="numbered-heading">Where I’ve Worked</h2>
 
       <div className="inner">
@@ -310,7 +355,7 @@ const Jobs = () => {
             })}
           <StyledHighlight activeTabId={activeTabId} />
         </StyledTabList>
-        
+
         {/* Job descriptions */}
         <StyledTabPanels>
           {jobsData &&
@@ -343,7 +388,9 @@ const Jobs = () => {
 
                     <div className="tags">
                       {tags.map((tag, index) => (
-                        <span key={index} className="tag">{tag}</span>
+                        <span key={index} className="tag">
+                          {tag}
+                        </span>
                       ))}
                     </div>
                   </StyledTabPanel>

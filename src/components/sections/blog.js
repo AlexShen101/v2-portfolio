@@ -6,10 +6,24 @@ import { srConfig } from '@config';
 import { usePrefersReducedMotion } from '@hooks';
 
 const FeaturedPostSection = styled.section`
-  max-width: 1100px;
-  padding-top: 30vh; /* Adjust this value to match the height of your navbar */
-  margin-top: -20vh; /* Negative margin to pull the content up */
-  
+  padding: 30vh 120px 0;
+  margin-top: -20vh;
+
+  @media (max-width: 1080px) {
+    padding: 30vh 80px 0;
+  }
+  @media (max-width: 768px) {
+    padding: 30vh 40px 0;
+  }
+  @media (max-width: 480px) {
+    padding: 30vh 24px 0;
+  }
+
+  > * {
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
   .link-container {
     margin-top: 4rem;
@@ -114,11 +128,17 @@ const Blog = () => {
       return;
     }
 
-    sr.reveal(revealBlog.current, srConfig());
-  }, []);
+    if (revealBlog.current && sr) {
+      sr.reveal(revealBlog.current, srConfig());
+    }
+  }, [prefersReducedMotion]);
 
   return (
-    <FeaturedPostSection id="featured-posts" ref={revealBlog}>
+    <FeaturedPostSection
+      id="featured-posts"
+      ref={revealBlog}
+      style={prefersReducedMotion ? { opacity: 1 } : {}}
+    >
       <h2 className="numbered-heading">
         Featured Posts
       </h2>

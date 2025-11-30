@@ -64,7 +64,7 @@ const StyledHamburgerButton = styled.button`
       width: var(--hamburger-width);
       height: 2px;
       border-radius: 4px;
-      background-color: var(--green);
+      background-color: var(--cream);
       transition-timing-function: ease;
       transition-duration: 0.15s;
       transition-property: transform;
@@ -74,7 +74,7 @@ const StyledHamburgerButton = styled.button`
       top: ${props => (props.menuOpen ? `0` : `-10px`)};
       opacity: ${props => (props.menuOpen ? 0 : 1)};
       transition: ${({ menuOpen }) =>
-    menuOpen ? 'var(--ham-before-active)' : 'var(--ham-before)'};
+        menuOpen ? 'var(--ham-before-active)' : 'var(--ham-before)'};
     }
     &:after {
       width: ${props => (props.menuOpen ? `100%` : `80%`)};
@@ -94,12 +94,12 @@ const StyledSidebar = styled.aside`
     top: 0;
     bottom: 0;
     right: 0;
-    padding: 50px 10px;
-    width: min(75vw, 400px);
+    padding: var(--spacing-xxl) var(--spacing-md);
+    width: min(75vw, 380px);
     height: 100vh;
     outline: 0;
-    background-color: var(--light-navy);
-    box-shadow: -10px 0px 30px -15px var(--navy-shadow);
+    background-color: var(--bg-primary);
+    border-left: 1px solid var(--border-primary);
     z-index: 9;
     transform: translateX(${props => (props.menuOpen ? 0 : 100)}vw);
     visibility: ${props => (props.menuOpen ? 'visible' : 'hidden')};
@@ -110,8 +110,8 @@ const StyledSidebar = styled.aside`
     ${({ theme }) => theme.mixins.flexBetween};
     width: 100%;
     flex-direction: column;
-    color: var(--lightest-slate);
-    font-family: var(--font-mono);
+    color: var(--cream);
+    font-family: var(--font-sans);
     text-align: center;
   }
 
@@ -123,33 +123,32 @@ const StyledSidebar = styled.aside`
 
     li {
       position: relative;
-      margin: 0 auto 20px;
-      counter-increment: item 1;
-      font-size: clamp(var(--fz-sm), 4vw, var(--fz-lg));
+      margin: 0 auto var(--spacing-lg);
+      font-size: clamp(var(--fz-md), 4vw, var(--fz-lg));
 
       @media (max-width: 600px) {
-        margin: 0 auto 10px;
-      }
-
-      &:before {
-        content: '0' counter(item) '.';
-        display: block;
-        margin-bottom: 5px;
-        color: var(--green);
-        font-size: var(--fz-sm);
+        margin: 0 auto var(--spacing-md);
       }
     }
 
     a {
       ${({ theme }) => theme.mixins.link};
       width: 100%;
-      padding: 3px 20px 20px;
+      padding: var(--spacing-xs) var(--spacing-md) var(--spacing-md);
+      color: var(--light-gray);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: var(--transition-fast);
+
+      &:hover {
+        color: var(--cream);
+      }
     }
   }
 
   .resume-link {
     ${({ theme }) => theme.mixins.bigButton};
-    padding: 18px 50px;
+    padding: 18px 40px;
     margin: 10% auto 0;
     width: max-content;
   }

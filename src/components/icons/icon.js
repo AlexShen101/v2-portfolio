@@ -16,37 +16,52 @@ import { FaTiktok } from 'react-icons/fa';
 
 import { MdEmail } from 'react-icons/md';
 
-const Icon = ({ name }) => {
+import { LuVideo, LuGamepad2, LuMicVocal } from 'react-icons/lu';
+
+const Icon = ({ name, size = 16, color }) => {
+  const iconProps = {
+    size,
+    style: color ? { color } : undefined,
+  };
+
   switch (name) {
     case 'Bookmark':
-      return <GoBookmarkFill />;
+      return <GoBookmarkFill {...iconProps} />;
     case 'External':
-      return <RiExternalLinkLine />;
+      return <RiExternalLinkLine {...iconProps} />;
     case 'GitHub':
-      return <RiGithubLine />;
+      return <RiGithubLine {...iconProps} />;
     case 'Linkedin':
-      return <RiLinkedinBoxFill />;
+      return <RiLinkedinBoxFill {...iconProps} />;
     case 'Email':
-      return <MdEmail />;
+      return <MdEmail {...iconProps} />;
     case 'Logo':
       return <IconLogo />;
     case 'Substack':
-      return <RiNewsLine />;
+      return <RiNewsLine {...iconProps} />;
     case 'Twitter':
-      return <FaTwitter />;
+      return <FaTwitter {...iconProps} />;
     case 'YouTube':
-      return <FaYoutube />;
+      return <FaYoutube {...iconProps} />;
     case 'Instagram':
-      return <FaInstagram />;
+      return <FaInstagram {...iconProps} />;
     case 'TikTok':
-      return <FaTiktok />;
+      return <FaTiktok {...iconProps} />;
+    case 'Video':
+      return <LuVideo {...iconProps} />;
+    case 'Gamepad':
+      return <LuGamepad2 {...iconProps} />;
+    case 'Music':
+      return <LuMicVocal {...iconProps} />;
     default:
-      return <RiExternalLinkLine />;
+      return <RiExternalLinkLine {...iconProps} />;
   }
 };
 
 Icon.propTypes = {
   name: PropTypes.string.isRequired,
+  size: PropTypes.number,
+  color: PropTypes.string,
 };
 
 export default Icon;

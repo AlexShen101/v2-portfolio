@@ -2,45 +2,84 @@ import { css } from 'styled-components';
 
 const variables = css`
   :root {
-    --dark-navy: #020c1b;
-    --navy: #0a192f;
-    --light-navy: #112240;
-    --lightest-navy: #233554;
-    --navy-shadow: rgba(2, 12, 27, 0.7);
-    --dark-slate: #495670;
-    --slate: #8892b0;
-    --light-slate: #a8b2d1;
-    --lightest-slate: #ccd6f6;
-    --white: #e6f1ff;
-    --green: #64ffda;
-    --green-tint: rgba(100, 255, 218, 0.1);
-    --pink: #f57dff;
-    --blue: #57cbff;
+    /* Minimal Black & White Color System - Dark Mode (Default) */
+    --bg-primary: #050505; /* decide-black */
+    --bg-secondary: #0a0a0a;
+    --bg-tertiary: #151515;
+    --bg-elevated: #121212; /* decide-darkgray */
 
-    --font-sans: 'Calibre', 'Inter', 'San Francisco', 'SF Pro Text', -apple-system, system-ui,
-      sans-serif;
-    --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace;
+    --cream: #fdfcf8;
+    --light-gray: #a3a3a3;
+    --medium-gray: #737373;
 
-    --fz-xxs: 12px;
-    --fz-xs: 13px;
+    --border-primary: #333333; /* decide-border */
+    --border-secondary: #1a1a1a;
+
+    --accent: #ffffff;
+    --accent-hover: #d4d4d4;
+
+    --shadow: rgba(0, 0, 0, 0.3);
+    --overlay: rgba(0, 0, 0, 0.8);
+
+    /* Custom Theme Colors - Decide (Dark) */
+    --decide-black: #050505;
+    --decide-neon: #00ff94;
+    --decide-darkgray: #121212;
+    --decide-border: #333333;
+
+    /* Custom Theme Colors - Adaline (Light) */
+    --adaline-paper: #fdfcf8;
+    --adaline-ink: #1a1a1a;
+    --adaline-soft: #e5e5e5;
+    --adaline-accent: #2f4f4f;
+
+    /* Accent Colors */
+    --green: #22c55e;
+    --blue: #3b82f6;
+    --purple: #a855f7;
+    --pink: #ec4899;
+    --orange: #f97316;
+
+    /* Typography */
+    --font-sans: 'Calibre', 'San Francisco', 'SF Pro Text', -apple-system, system-ui, sans-serif;
+    --font-serif: 'Playfair Display', 'Georgia', serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace;
+
+    /* Font Sizes - Refined minimal scale */
+    --fz-xxs: 11px;
+    --fz-xs: 12px;
     --fz-sm: 14px;
     --fz-md: 16px;
     --fz-lg: 18px;
     --fz-xl: 20px;
-    --fz-xxl: 22px;
+    --fz-xxl: 24px;
     --fz-heading: 32px;
 
-    --border-radius: 16px;
-    --nav-height: 100px;
-    --nav-scroll-height: 70px;
+    /* Spacing - Generous minimal spacing */
+    --spacing-xs: 8px;
+    --spacing-sm: 16px;
+    --spacing-md: 24px;
+    --spacing-lg: 32px;
+    --spacing-xl: 48px;
+    --spacing-xxl: 64px;
+    --spacing-xxxl: 96px;
 
-    --tab-height: 42px;
-    --tab-width: 120px;
+    /* Layout */
+    --border-radius: 0px; /* Sharp edges for minimal aesthetic */
+    --nav-height: 80px;
+    --nav-scroll-height: 64px;
+    --max-width: 1400px;
 
-    --easing: cubic-bezier(0.645, 0.045, 0.355, 1);
-    --transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+    /* Animations - Subtle and refined */
+    --easing: cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
-    --hamburger-width: 30px;
+    /* Interactive Elements */
+    --tab-height: 48px;
+    --tab-width: 140px;
+    --hamburger-width: 28px;
 
     --ham-before: top 0.1s ease-in 0.25s, opacity 0.1s ease-in;
     --ham-before-active: top 0.1s ease-out, opacity 0.1s ease-out 0.12s;

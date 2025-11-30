@@ -20,11 +20,22 @@ import { usePrefersReducedMotion } from '@hooks';
 // `;
 
 const StyledAboutSection = styled.section`
-  max-width: 1100px;
-  padding-top: 20vh; /* Adjust this value to match the height of your navbar */
-  margin-top: -10vh; /* Negative margin to pull the content up */
-  
+  padding: 20vh 120px 0;
+  margin-top: -10vh;
+
+  @media (max-width: 1080px) {
+    padding: 20vh 80px 0;
+  }
+  @media (max-width: 768px) {
+    padding: 20vh 40px 0;
+  }
+  @media (max-width: 480px) {
+    padding: 20vh 24px 0;
+  }
+
   .inner {
+    max-width: 1100px;
+    margin: 0 auto;
     display: flex;
 
     @media (max-width: 600px) {
