@@ -112,9 +112,8 @@ const GlobalStyle = createGlobalStyle`
   }
 
   main {
-    margin: 0 auto;
+    margin: 0;
     width: 100%;
-    max-width: var(--max-width);
     min-height: 100vh;
     padding: 0;
 
