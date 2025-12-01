@@ -11,6 +11,35 @@ const StyledHeroSection = styled.section`
   background-color: var(--bg-primary);
   padding: 20vh 120px var(--spacing-lg);
   margin-top: 0vh;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -5%;
+    left: -5%;
+    width: 110%;
+    height: 110%;
+    background-image: url('/hero_bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(6px);
+    z-index: 0;
+    will-change: transform;
+    animation: breathe 20s ease-in-out infinite;
+  }
+
+  @keyframes breathe {
+    0%,
+    100% {
+      transform: translateX(1.5%);
+    }
+    50% {
+      transform: translateX(-1.5%);
+    }
+  }
 
   @media (max-width: 1080px) {
     padding: 20vh 80px var(--spacing-lg);
@@ -32,6 +61,8 @@ const TerminalContainer = styled.div`
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
   font-family: var(--font-mono);
+  position: relative;
+  z-index: 1;
 
   :root[data-theme='light'] & {
     background-color: #ffffff;
