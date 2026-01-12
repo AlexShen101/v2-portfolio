@@ -342,8 +342,6 @@ const Featured = () => {
     }
   `);
 
-  console.log(data);
-
   const featuredProjects = data.projects.edges.filter(({ node }) => node);
   const prefersReducedMotion = usePrefersReducedMotion();
 

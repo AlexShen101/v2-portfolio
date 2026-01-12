@@ -28,10 +28,10 @@ const StyledHeroSection = styled.section`
     filter: blur(6px);
     z-index: 0;
     will-change: transform;
-    animation: breathe 20s ease-in-out infinite;
+    animation: heroPan 20s ease-in-out infinite;
   }
 
-  @keyframes breathe {
+  @keyframes heroPan {
     0%,
     100% {
       transform: translateX(1.5%);
