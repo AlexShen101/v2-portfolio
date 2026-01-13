@@ -366,7 +366,8 @@ const StyledExpandableContent = styled.div`
 
 const StyledExpandableInner = styled.div`
   overflow: hidden;
-  padding: ${({ isExpanded }) => (isExpanded ? 'var(--spacing-lg) var(--spacing-lg) 0' : '0 var(--spacing-lg)')};
+  padding: ${({ isExpanded }) =>
+    isExpanded ? 'var(--spacing-lg) var(--spacing-lg) 0' : '0 var(--spacing-lg)'};
 
   .description {
     font-size: var(--fz-sm);
@@ -442,29 +443,6 @@ const StyledActionBar = styled.div`
       height: 18px;
       display: block;
     }
-  }
-`;
-
-const StyledEndMarker = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: var(--spacing-xxxl) 0;
-  opacity: 0.2;
-
-  .line {
-    width: 1px;
-    height: 48px;
-    background-color: var(--medium-gray);
-    margin-bottom: var(--spacing-md);
-  }
-
-  .text {
-    font-family: var(--font-mono);
-    font-size: var(--fz-xxs);
-    text-transform: uppercase;
-    letter-spacing: 0.3em;
-    color: var(--medium-gray);
   }
 `;
 
@@ -731,10 +709,6 @@ const Featured = () => {
               onToggle={() => toggleMobileExpand(i)}
             />
           ))}
-        <StyledEndMarker>
-          <div className="line" />
-          <div className="text">End of Index</div>
-        </StyledEndMarker>
       </StyledMobileFeedContainer>
     </StyledFeatureSection>
   );
