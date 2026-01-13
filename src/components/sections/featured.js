@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import { GatsbyImage, getImage, StaticImage } from 'gatsby-plugin-image';
 import styled from 'styled-components';
@@ -17,6 +17,12 @@ const StyledFeatureSection = styled.section`
   }
   @media (max-width: 480px) {
     padding: 20vh 24px 0;
+  }
+`;
+
+const StyledDesktopProjectsWrapper = styled.div`
+  @media (max-width: 600px) {
+    display: none;
   }
 `;
 
@@ -238,6 +244,249 @@ const StyledProject = styled.li`
   }
 `;
 
+const StyledMobileFeedContainer = styled.div`
+  display: none;
+
+  @media (max-width: 600px) {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) 0;
+    gap: var(--spacing-xxxl);
+  }
+`;
+
+const StyledFeedCard = styled.div`
+  background-color: var(--bg-primary);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-secondary);
+  transition: var(--transition-fast);
+
+  &:hover {
+    border-color: var(--border-primary);
+  }
+`;
+
+const StyledMediaContainer = styled.div`
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  cursor: pointer;
+
+  .feed-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &:hover .feed-image {
+    transform: scale(1.05);
+  }
+
+  .gradient-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 50%, transparent 100%);
+    pointer-events: none;
+  }
+`;
+
+const StyledFloatingTags = styled.div`
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-right: 48px;
+  z-index: 2;
+
+  .tag {
+    padding: 4px 8px;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(12px);
+    color: white;
+    font-size: 9px;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+`;
+
+const StyledProjectNumber = styled.div`
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-family: var(--font-mono);
+  font-size: var(--fz-xxs);
+  z-index: 2;
+`;
+
+const StyledBottomOverlay = styled.div`
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  right: 24px;
+  color: white;
+  z-index: 2;
+
+  h3 {
+    font-size: clamp(32px, 7vw, 42px);
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--cream);
+    line-height: 1.2;
+  }
+
+  .info-hint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 10px;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+
+    svg {
+      color: var(--decide-neon);
+    }
+  }
+`;
+
+const StyledExpandableContent = styled.div`
+  display: grid;
+  grid-template-rows: ${({ isExpanded }) => (isExpanded ? '1fr' : '0fr')};
+  opacity: ${({ isExpanded }) => (isExpanded ? '1' : '0')};
+  transition: all 0.5s ease-in-out;
+  overflow: hidden;
+`;
+
+const StyledExpandableInner = styled.div`
+  overflow: hidden;
+  padding: ${({ isExpanded }) => (isExpanded ? 'var(--spacing-lg) var(--spacing-lg) 0' : '0 var(--spacing-lg)')};
+
+  .description {
+    font-size: var(--fz-sm);
+    color: var(--light-gray);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-md);
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .all-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+
+    .tag-hash {
+      font-size: 10px;
+      color: var(--medium-gray);
+      font-family: var(--font-mono);
+    }
+  }
+`;
+
+const StyledActionBar = styled.div`
+  padding: var(--spacing-lg);
+  border-top: 1px solid var(--border-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(255, 255, 255, 0.01);
+
+  .links {
+    display: flex;
+    gap: var(--spacing-lg);
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--medium-gray);
+      text-decoration: none;
+      transition: var(--transition-fast);
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
+  .expand-button {
+    padding: 8px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: ${({ isExpanded }) => (isExpanded ? 'var(--decide-neon)' : 'var(--medium-gray)')};
+    transform: ${({ isExpanded }) => (isExpanded ? 'rotate(180deg)' : 'rotate(0deg)')};
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    svg {
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
+  }
+`;
+
+const StyledEndMarker = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-xxxl) 0;
+  opacity: 0.2;
+
+  .line {
+    width: 1px;
+    height: 48px;
+    background-color: var(--medium-gray);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .text {
+    font-family: var(--font-mono);
+    font-size: var(--fz-xxs);
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--medium-gray);
+  }
+`;
+
+// Map external links to custom link text
+const externalLinkTextMap = {
+  'https://coe5-army-optimizer-demo-site.vercel.app/': 'Learn More',
+};
+
 const FeaturedProjectItem = ({ node, index }) => {
   const { frontmatter, html } = node;
   const { external, title, tech, github, cover } = frontmatter;
@@ -312,6 +561,97 @@ const FeaturedProjectItem = ({ node, index }) => {
   );
 };
 
+const MobileFeedCard = ({ node, index, isExpanded, onToggle }) => {
+  const { frontmatter, html } = node;
+  const { external, title, tech, github, cover } = frontmatter;
+  const image = getImage(cover);
+
+  return (
+    <StyledFeedCard>
+      <StyledMediaContainer onClick={onToggle}>
+        {cover ? (
+          <GatsbyImage image={image} alt={title} className="feed-image" />
+        ) : (
+          <StaticImage src="./thumbnail.png" alt={title} className="feed-image" />
+        )}
+
+        <div className="gradient-overlay" />
+
+        <StyledFloatingTags>
+          {tech.slice(0, 3).map((tag, i) => (
+            <span key={i} className="tag">
+              {tag}
+            </span>
+          ))}
+        </StyledFloatingTags>
+
+        <StyledProjectNumber>{index + 1}</StyledProjectNumber>
+
+        <StyledBottomOverlay>
+          <h3>{title}</h3>
+          <div className="info-hint">
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="16" x2="12" y2="12" />
+              <line x1="12" y1="8" x2="12.01" y2="8" />
+            </svg>
+            <span>TAP FOR DETAILS</span>
+          </div>
+        </StyledBottomOverlay>
+      </StyledMediaContainer>
+
+      <StyledExpandableContent isExpanded={isExpanded}>
+        <StyledExpandableInner isExpanded={isExpanded}>
+          <div className="description" dangerouslySetInnerHTML={{ __html: html }} />
+          <div className="all-tags">
+            {tech.map((tag, i) => (
+              <span key={i} className="tag-hash">
+                #{tag}
+              </span>
+            ))}
+          </div>
+        </StyledExpandableInner>
+      </StyledExpandableContent>
+
+      <StyledActionBar isExpanded={isExpanded}>
+        <div className="links">
+          {github && (
+            <a href={github} aria-label="GitHub Link">
+              <Icon name="GitHub" />
+              <span>View Code</span>
+            </a>
+          )}
+          {external && (
+            <a href={external} aria-label="External Link">
+              <Icon name="External" />
+              <span>{externalLinkTextMap[external] || 'Live Demo'}</span>
+            </a>
+          )}
+        </div>
+        <button className="expand-button" onClick={onToggle} aria-label="Toggle details">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+      </StyledActionBar>
+    </StyledFeedCard>
+  );
+};
+
 const Featured = () => {
   const data = useStaticQuery(graphql`
     {
@@ -344,6 +684,7 @@ const Featured = () => {
 
   const featuredProjects = data.projects.edges.filter(({ node }) => node);
   const prefersReducedMotion = usePrefersReducedMotion();
+  const [expandedMobileIndex, setExpandedMobileIndex] = useState(0);
 
   const { elementRef: titleRef, scrollProgress: titleProgress } = useScrollAnimation({
     threshold: 0.2,
@@ -352,6 +693,10 @@ const Featured = () => {
 
   const titleOpacity = prefersReducedMotion ? 1 : titleProgress;
   const titleTranslateY = prefersReducedMotion ? 0 : (1 - titleProgress) * 30;
+
+  const toggleMobileExpand = index => {
+    setExpandedMobileIndex(expandedMobileIndex === index ? null : index);
+  };
 
   return (
     <StyledFeatureSection id="projects">
@@ -368,12 +713,33 @@ const Featured = () => {
         Some Things I've Built
       </h2>
 
-      <StyledProjectsGrid>
+      {/* Desktop Layout */}
+      <StyledDesktopProjectsWrapper>
+        <StyledProjectsGrid>
+          {featuredProjects &&
+            featuredProjects.map(({ node }, i) => (
+              <FeaturedProjectItem key={i} node={node} index={i} />
+            ))}
+        </StyledProjectsGrid>
+      </StyledDesktopProjectsWrapper>
+
+      {/* Mobile Feed Layout */}
+      <StyledMobileFeedContainer>
         {featuredProjects &&
           featuredProjects.map(({ node }, i) => (
-            <FeaturedProjectItem key={i} node={node} index={i} />
+            <MobileFeedCard
+              key={i}
+              node={node}
+              index={i}
+              isExpanded={expandedMobileIndex === i}
+              onToggle={() => toggleMobileExpand(i)}
+            />
           ))}
-      </StyledProjectsGrid>
+        <StyledEndMarker>
+          <div className="line" />
+          <div className="text">End of Index</div>
+        </StyledEndMarker>
+      </StyledMobileFeedContainer>
     </StyledFeatureSection>
   );
 };

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import { CSSTransition } from 'react-transition-group';
 import styled from 'styled-components';
+import { HiPlus, HiMinus } from 'react-icons/hi';
 import { srConfig } from '@config';
 import { KEY_CODES } from '@utils';
 import sr from '@utils/sr';
@@ -244,6 +245,164 @@ const StyledTabPanel = styled.div`
   }
 `;
 
+const StyledAccordionContainer = styled.div`
+  display: none;
+
+  @media (max-width: 600px) {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-secondary);
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: var(--bg-primary);
+    margin-bottom: var(--spacing-xxl);
+  }
+`;
+
+const StyledAccordionItem = styled.div`
+  border-bottom: 1px solid var(--border-secondary);
+  transition: background-color 0.3s ease;
+  background-color: ${({ isOpen }) => (isOpen ? 'var(--bg-tertiary)' : 'transparent')};
+
+  &:last-child {
+    border-bottom: none;
+  }
+`;
+
+const StyledAccordionButton = styled.button`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-lg) var(--spacing-md);
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:active {
+    background-color: var(--bg-elevated);
+  }
+`;
+
+const StyledAccordionHeader = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  .range {
+    font-family: var(--font-mono);
+    font-size: var(--fz-xxs);
+    color: var(--medium-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+  }
+
+  .company-name {
+    font-size: var(--fz-lg);
+    font-weight: 700;
+    color: var(--cream);
+  }
+
+  .role {
+    font-family: var(--font-mono);
+    font-size: var(--fz-xxs);
+    color: var(--decide-neon);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 10px rgba(0, 255, 148, 0.6);
+  }
+`;
+
+const StyledAccordionIconWrapper = styled.div`
+  padding: 8px;
+  border-radius: 50%;
+  border: 1px solid var(--border-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  transform: ${({ isOpen }) => (isOpen ? 'rotate(180deg)' : 'rotate(0deg)')};
+  background-color: ${({ isOpen }) =>
+    isOpen ? 'var(--decide-neon)' : 'transparent'};
+  border-color: ${({ isOpen }) => (isOpen ? 'transparent' : 'var(--border-secondary)')};
+  color: ${({ isOpen }) => (isOpen ? 'var(--bg-primary)' : 'var(--medium-gray)')};
+`;
+
+const StyledAccordionContent = styled.div`
+  display: grid;
+  grid-template-rows: ${({ isOpen }) => (isOpen ? '1fr' : '0fr')};
+  opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
+  transition: all 0.5s ease-in-out;
+  overflow: hidden;
+`;
+
+const StyledAccordionContentInner = styled.div`
+  overflow: hidden;
+  padding: 0 var(--spacing-md) var(--spacing-lg);
+
+  .divider {
+    height: 1px;
+    background: var(--border-secondary);
+    width: 100%;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  li {
+    position: relative;
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-md);
+    font-size: var(--fz-sm);
+    color: var(--light-gray);
+    line-height: 1.6;
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.6em;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: var(--decide-neon);
+    }
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tag {
+    padding: 4px 8px;
+    font-size: 9px;
+    font-family: var(--font-mono);
+    border: 1px solid var(--border-secondary);
+    border-radius: var(--border-radius);
+    color: var(--light-gray);
+    background-color: transparent;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+`;
+
+const StyledDesktopTabsWrapper = styled.div`
+  @media (max-width: 600px) {
+    display: none;
+  }
+`;
+
 const Jobs = () => {
   const data = useStaticQuery(graphql`
     query {
@@ -272,9 +431,14 @@ const Jobs = () => {
 
   const [activeTabId, setActiveTabId] = useState(0);
   const [tabFocus, setTabFocus] = useState(null);
+  const [accordionOpenIndex, setAccordionOpenIndex] = useState(0);
   const tabs = useRef([]);
   const revealContainer = useRef(null);
   const prefersReducedMotion = usePrefersReducedMotion();
+
+  const toggleAccordion = index => {
+    setAccordionOpenIndex(accordionOpenIndex === index ? null : index);
+  };
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -330,62 +494,107 @@ const Jobs = () => {
       id="jobs"
       ref={revealContainer}
       style={prefersReducedMotion ? { opacity: 1 } : {}}>
-      <h2 className="numbered-heading">Where I’ve Worked</h2>
+      <h2 className="numbered-heading">Where I've Worked</h2>
 
-      <div className="inner">
-        {/* Companies sidebar */}
-        <StyledTabList role="tablist" aria-label="Job tabs" onKeyDown={e => onKeyDown(e)}>
-          {jobsData &&
-            jobsData.map(({ node }, i) => {
-              const { company } = node.frontmatter;
-              return (
-                <StyledTabButton
-                  key={i}
-                  isActive={activeTabId === i}
-                  onClick={() => setActiveTabId(i)}
-                  ref={el => (tabs.current[i] = el)}
-                  id={`tab-${i}`}
-                  role="tab"
-                  tabIndex={activeTabId === i ? '0' : '-1'}
-                  aria-selected={activeTabId === i ? true : false}
-                  aria-controls={`panel-${i}`}>
-                  <span>{company}</span>
-                </StyledTabButton>
-              );
-            })}
-          <StyledHighlight activeTabId={activeTabId} />
-        </StyledTabList>
-
-        {/* Job descriptions */}
-        <StyledTabPanels>
-          {jobsData &&
-            jobsData.map(({ node }, i) => {
-              const { frontmatter, html } = node;
-              const { title, url, company, range, tags } = frontmatter;
-
-              return (
-                <CSSTransition key={i} in={activeTabId === i} timeout={250} classNames="fade">
-                  <StyledTabPanel
-                    id={`panel-${i}`}
-                    role="tabpanel"
+      {/* Desktop Tabs Layout */}
+      <StyledDesktopTabsWrapper>
+        <div className="inner">
+          {/* Companies sidebar */}
+          <StyledTabList role="tablist" aria-label="Job tabs" onKeyDown={e => onKeyDown(e)}>
+            {jobsData &&
+              jobsData.map(({ node }, i) => {
+                const { company } = node.frontmatter;
+                return (
+                  <StyledTabButton
+                    key={i}
+                    isActive={activeTabId === i}
+                    onClick={() => setActiveTabId(i)}
+                    ref={el => (tabs.current[i] = el)}
+                    id={`tab-${i}`}
+                    role="tab"
                     tabIndex={activeTabId === i ? '0' : '-1'}
-                    aria-labelledby={`tab-${i}`}
-                    aria-hidden={activeTabId !== i}
-                    hidden={activeTabId !== i}>
-                    <h3>
-                      <span>{title}</span>
-                      <span className="company">
-                        &nbsp;@&nbsp;
-                        <a href={url} className="inline-link">
-                          {company}
-                        </a>
-                      </span>
-                    </h3>
+                    aria-selected={activeTabId === i ? true : false}
+                    aria-controls={`panel-${i}`}>
+                    <span>{company}</span>
+                  </StyledTabButton>
+                );
+              })}
+            <StyledHighlight activeTabId={activeTabId} />
+          </StyledTabList>
 
-                    <p className="range">{range}</p>
+          {/* Job descriptions */}
+          <StyledTabPanels>
+            {jobsData &&
+              jobsData.map(({ node }, i) => {
+                const { frontmatter, html } = node;
+                const { title, url, company, range, tags } = frontmatter;
 
+                return (
+                  <CSSTransition key={i} in={activeTabId === i} timeout={250} classNames="fade">
+                    <StyledTabPanel
+                      id={`panel-${i}`}
+                      role="tabpanel"
+                      tabIndex={activeTabId === i ? '0' : '-1'}
+                      aria-labelledby={`tab-${i}`}
+                      aria-hidden={activeTabId !== i}
+                      hidden={activeTabId !== i}>
+                      <h3>
+                        <span>{title}</span>
+                        <span className="company">
+                          &nbsp;@&nbsp;
+                          <a href={url} className="inline-link">
+                            {company}
+                          </a>
+                        </span>
+                      </h3>
+
+                      <p className="range">{range}</p>
+
+                      <div dangerouslySetInnerHTML={{ __html: html }} />
+
+                      <div className="tags">
+                        {tags.map((tag, index) => (
+                          <span key={index} className="tag">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </StyledTabPanel>
+                  </CSSTransition>
+                );
+              })}
+          </StyledTabPanels>
+        </div>
+      </StyledDesktopTabsWrapper>
+
+      {/* Mobile Accordion Layout */}
+      <StyledAccordionContainer>
+        {jobsData &&
+          jobsData.map(({ node }, i) => {
+            const { frontmatter, html } = node;
+            const { title, url, company, range, tags } = frontmatter;
+            const isOpen = accordionOpenIndex === i;
+
+            return (
+              <StyledAccordionItem key={i} isOpen={isOpen}>
+                <StyledAccordionButton
+                  onClick={() => toggleAccordion(i)}
+                  aria-expanded={isOpen}
+                  aria-controls={`accordion-content-${i}`}>
+                  <StyledAccordionHeader>
+                    <div className="range">{range}</div>
+                    <div className="company-name">{company}</div>
+                    <div className="role">{title}</div>
+                  </StyledAccordionHeader>
+                  <StyledAccordionIconWrapper isOpen={isOpen}>
+                    {isOpen ? <HiMinus size={18} /> : <HiPlus size={18} />}
+                  </StyledAccordionIconWrapper>
+                </StyledAccordionButton>
+
+                <StyledAccordionContent id={`accordion-content-${i}`} isOpen={isOpen}>
+                  <StyledAccordionContentInner>
+                    <div className="divider" />
                     <div dangerouslySetInnerHTML={{ __html: html }} />
-
                     <div className="tags">
                       {tags.map((tag, index) => (
                         <span key={index} className="tag">
@@ -393,12 +602,12 @@ const Jobs = () => {
                         </span>
                       ))}
                     </div>
-                  </StyledTabPanel>
-                </CSSTransition>
-              );
-            })}
-        </StyledTabPanels>
-      </div>
+                  </StyledAccordionContentInner>
+                </StyledAccordionContent>
+              </StyledAccordionItem>
+            );
+          })}
+      </StyledAccordionContainer>
     </StyledJobsSection>
   );
 };
