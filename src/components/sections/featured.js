@@ -276,13 +276,19 @@ const StyledMediaContainer = styled.div`
   overflow: hidden;
   cursor: pointer;
 
+  .gatsby-image-wrapper,
   .feed-image {
     width: 100%;
     height: 100%;
+  }
+
+  .gatsby-image-wrapper img,
+  .feed-image {
     object-fit: cover;
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  &:hover .gatsby-image-wrapper img,
   &:hover .feed-image {
     transform: scale(1.05);
   }
@@ -302,7 +308,6 @@ const StyledFloatingTags = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  padding-right: 48px;
   z-index: 2;
 
   .tag {
@@ -317,25 +322,6 @@ const StyledFloatingTags = styled.div`
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
-`;
-
-const StyledProjectNumber = styled.div`
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-family: var(--font-mono);
-  font-size: var(--fz-xxs);
-  z-index: 2;
 `;
 
 const StyledBottomOverlay = styled.div`
@@ -570,9 +556,21 @@ const MobileFeedCard = ({ node, index, isExpanded, onToggle }) => {
     <StyledFeedCard>
       <StyledMediaContainer onClick={onToggle}>
         {cover ? (
-          <GatsbyImage image={image} alt={title} className="feed-image" />
+          <GatsbyImage
+            image={image}
+            alt={title}
+            className="feed-image"
+            imgStyle={{ objectFit: 'cover' }}
+            style={{ height: '100%' }}
+          />
         ) : (
-          <StaticImage src="./thumbnail.png" alt={title} className="feed-image" />
+          <StaticImage
+            src="./thumbnail.png"
+            alt={title}
+            className="feed-image"
+            imgStyle={{ objectFit: 'cover' }}
+            style={{ height: '100%' }}
+          />
         )}
 
         <div className="gradient-overlay" />
@@ -584,8 +582,6 @@ const MobileFeedCard = ({ node, index, isExpanded, onToggle }) => {
             </span>
           ))}
         </StyledFloatingTags>
-
-        <StyledProjectNumber>{index + 1}</StyledProjectNumber>
 
         <StyledBottomOverlay>
           <h3>{title}</h3>
@@ -668,7 +664,7 @@ const Featured = () => {
               title
               cover {
                 childImageSharp {
-                  gatsbyImageData(width: 700, placeholder: BLURRED, formats: [AUTO, WEBP, AVIF])
+                  gatsbyImageData(width: 800, placeholder: BLURRED, formats: [AUTO, WEBP, AVIF])
                 }
               }
               tech
